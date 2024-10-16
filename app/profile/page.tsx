@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { UserTypeData } from "@/database/types/types";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import useAdmin from "@/database/hooks/useAdmin";
 import Loader from "@/app/components/Loader";
 

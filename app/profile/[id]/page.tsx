@@ -3,7 +3,6 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getUserInfos } from "@/database/services/userService";
 import { UserTypeData } from "@/database/types/types";
-import { useContextAuth } from "@/database/contexts/AuthContext";
 import Loader from "@/app/components/Loader";
 import HeaderProfil from "@/app/components/profile/HeaderProfil";
 import UserInfosSection from "@/app/components/profile/InfosUserSection";
