@@ -1,10 +1,8 @@
-import { doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc, addDoc, updateDoc, deleteDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from "@/database/firebaseConfig";
-import { redirect } from "next/navigation";
 import { PostTypeData } from "../types/types";
 
-// Fonction pour récupérer un post par ID
 
 export const getPostById = async (postId: string): Promise<PostTypeData | null> => {
   try {
@@ -13,16 +11,15 @@ export const getPostById = async (postId: string): Promise<PostTypeData | null> 
 
     if (postSnapshot.exists()) {
       return postSnapshot.data() as PostTypeData;
-    } 
+    } else {
+      return null; 
+    }
   } catch (err) {
     console.error("Erreur lors de la récupération du post:", err);
-    return null; // Assurez-vous de retourner null en cas d'erreur
+    return null; 
   }
 };
 
-
-
-// Fonction pour récupérer tous les posts
 export const getAllPosts = async (): Promise<PostTypeData[]> => {
   try {
     const postsCollection = collection(db, "posts");
@@ -57,10 +54,6 @@ export const addPost = async (postData: PostTypeData): Promise<void> => {
   }
 };
 
-
-
-
-// Fonction pour mettre à jour un post existant
 export const updatePost = async (postId: string, updatedPostData: Partial<PostTypeData>): Promise<void> => {
   try {
     const postDoc = doc(db, "posts", postId);
@@ -72,7 +65,6 @@ export const updatePost = async (postId: string, updatedPostData: Partial<PostTy
 };
 
 
-// Fonction pour supprimer un post et son image associée dans Firebase Storage
 export const deletePost = async (postId: string): Promise<void> => {
   try {
   
@@ -82,18 +74,16 @@ export const deletePost = async (postId: string): Promise<void> => {
 
     if (postSnapshot.exists()) {
       const postData = postSnapshot.data();
-      const imageUrl = postData?.image; // URL de l'image du post
+      const imageUrl = postData?.image;
 
-      // Vérifier si une image existe et supprimer l'image du Storage si c'est le cas
       if (imageUrl) {
         const storage = getStorage();
 
-        // Extraire uniquement le chemin du fichier à partir de l'URL complète de l'image
-        const decodedUrl = decodeURIComponent(imageUrl); // Décoder les caractères encodés dans l'URL
-        const imagePath = decodedUrl.split("/").slice(-2).join("/").split("?")[0]; // Récupérer le chemin correct
+        const decodedUrl = decodeURIComponent(imageUrl); 
+        const imagePath = decodedUrl.split("/").slice(-2).join("/").split("?")[0];
 
         if (imagePath) {
-          const imageRef = ref(storage, imagePath); // Utiliser le chemin correct
+          const imageRef = ref(storage, imagePath); 
 
           try {
             await deleteObject(imageRef);
@@ -103,7 +93,6 @@ export const deletePost = async (postId: string): Promise<void> => {
         }
       }
 
-      // Supprimer le document du post dans Firestore
       await deleteDoc(postDocRef);
     } else {
       throw new Error("Post non trouvé.");
@@ -112,8 +101,6 @@ export const deletePost = async (postId: string): Promise<void> => {
     throw new Error("Erreur lors de la suppression du post.");
   }
 };
-
-
 
 export const getUserPosts = async (idUser: string): Promise<PostTypeData[]> => {
   const postsCollection = collection(db, 'posts');

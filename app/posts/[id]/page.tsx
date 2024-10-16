@@ -24,7 +24,7 @@ export default function PostSinglePage() {
           const fetchedDataPost = await getPostById(id as string);
           if (fetchedDataPost) {
             setDataPost(fetchedDataPost);
-            const userData = await getUserInfos(fetchedDataPost.authorId);
+            const userData = await getUserInfos(fetchedDataPost.authorId as string);
             setUserInfos(userData);
           } else {
             setError('Post non trouvé.');

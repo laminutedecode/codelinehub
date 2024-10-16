@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Link from "next/link";
 import { formatDate } from "@/database/utils/formatDate";
 import { UserTypeData, PostTypeData } from "@/database/types/types";

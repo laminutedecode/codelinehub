@@ -40,8 +40,8 @@ export type PostTypeData = {
   image?: string;
   postUrl?: string | null;
   authorId?: string ; 
-  createdAt?: Date | null;
-  updatedAt?: Date | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 };
 
 
