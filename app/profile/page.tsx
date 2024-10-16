@@ -5,22 +5,21 @@ import Link from "next/link";
 import { UserTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
 import useAdmin from "@/database/hooks/useAdmin";
-import Loader from "@/app/components/Loader"; 
+import Loader from "@/app/components/Loader";
 
 export default function UsersPage() {
-  const { members, loading, error } = useAdmin();
+  const { members, loading } = useAdmin();
   const [searchQuery, setSearchQuery] = useState("");
 
-  
-  if (error) {
-    return <p className="text-red-500">Erreur: {error.message}</p>;
-  }
-
   const filteredUser = members.filter((user) => {
+    const firstName = user?.firstName?.toLowerCase() || "";
+    const lastName = user?.lastName?.toLowerCase() || "";
+    const job = user?.job?.toLowerCase() || "";
+
     return (
-      user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.job.toLowerCase().includes(searchQuery.toLowerCase())
+      firstName.includes(searchQuery.toLowerCase()) ||
+      lastName.includes(searchQuery.toLowerCase()) ||
+      job.includes(searchQuery.toLowerCase())
     );
   });
 
@@ -48,12 +47,12 @@ export default function UsersPage() {
           <p className="text-white">Aucun membre trouvé.</p>
         ) : (
           filteredUser.map((user) => (
-            <li key={user.id} className="w-full border rounded-md p-4 text-center">
-              <Image src={user?.image as string} alt={user?.title} width={300} height={100} className="w-32 h-32 block mx-auto" />
+            <li key={user.idUser as string} className="w-full border rounded-md p-4 text-center">
+              <Image src={user?.image as string} alt={user?.firstName as string} width={900} height={600} className="w-32 h-32 block mx-auto rounded-full" />
               <div className="my-2 p-2">
-                <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user.firstName} {user.lastName}</h4>
-                <span className="block text-sm italic text-white mb-3">{user.job}</span>
-                <Link href={`/profile/${user.id}`} className="text-sm text-purple-500 hover:text-purple-800">
+                <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName} {user?.lastName}</h4>
+                <span className="block text-sm italic text-white mb-3">{user?.job}</span>
+                <Link href={`/profile/${user.idUser}`} className="text-sm text-purple-500 hover:text-purple-800">
                   Voir profil
                 </Link>
               </div>
