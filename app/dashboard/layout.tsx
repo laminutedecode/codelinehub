@@ -9,11 +9,9 @@ export default function DashboardLayout({ children }: Readonly<{
   children: React.ReactNode;
 }>) {
   
-  const { isFetch, redirectIfAuthenticated, user } = useContextAuth();
+  const { isFetch } = useContextAuth();
 
-  useEffect(() => {
-    redirectIfAuthenticated(); 
-  }, [user, redirectIfAuthenticated]); 
+
 
   if (isFetch) {
     return <Loader />;

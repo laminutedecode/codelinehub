@@ -11,7 +11,7 @@ export interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   loginWithGithub: () => Promise<void>;
-  redirectIfAuthenticated: () => void;
+
 }
 
 export interface UserTypeData {

@@ -17,14 +17,14 @@ export default function GridPostUser( {id }: {id: string}) {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-      if (user) {
+    
         try {
           const userPosts = await getUserPosts(id); 
           setPosts(userPosts);
         } catch (error) {
           console.error("Erreur lors de la récupération des posts de l'utilisateur:", error);
         } 
-      }
+      
     };
 
     fetchUserPosts();

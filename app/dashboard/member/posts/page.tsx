@@ -7,9 +7,6 @@ import Link from 'next/link';
 
 export default function PostsUserDashboard() {
   const { user } = useContextAuth();
-
- 
-
   return (
 
     <>

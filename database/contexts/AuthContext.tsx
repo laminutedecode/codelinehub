@@ -102,15 +102,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  const redirectIfAuthenticated = () => {
-    if (user) {
-      router.push('/dashboard/member/profile');
-    } else {
-      router.push('/signInAndSignUp');
-    }
-  };
+  
+    useEffect(() => {
+    
+      if (user) {
+        router.push('/dashboard/member/profile');
+      } 
+      
+    }, [user]); 
+    
+  
 
-  const authValue = { user, isFetch, signUp, signIn, redirectIfAuthenticated, loginWithGoogle, loginWithGithub };
+  const authValue = { user, isFetch, signUp, signIn, loginWithGoogle, loginWithGithub };
 
   return (
     <AuthContextProvider.Provider value={authValue}>
