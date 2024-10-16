@@ -1,0 +1,72 @@
+"use client";
+
+import { FaGithub, FaYoutube, FaInstagramSquare } from "react-icons/fa";
+import { CgWebsite } from "react-icons/cg";
+import Image from "next/image";
+import Link from "next/link";
+import { formatDate } from "@/database/utils/formatDate";
+import { UserTypeData } from "@/database/types/types";
+
+interface UserProfileProps {
+  userInfos: UserTypeData;
+}
+
+export default function UserProfile({ userInfos }: UserProfileProps) {
+  const userReseaux = [
+    { name: "Instagram", url: userInfos.instagramUrl, icon: FaInstagramSquare },
+    { name: "Website", url: userInfos.websiteUrl, icon: CgWebsite },
+    { name: "Youtube", url: userInfos.youtubeUrl, icon: FaYoutube },
+    { name: "Github", url: userInfos.githubUrl, icon: FaGithub },
+  ];
+
+  return (
+    <div className="h-full w-full">
+
+      <div
+        className="relative max-w-[1200px] h-[500px] mx-auto bg-fixed bg-center bg-cover md:border-l md:border-r"
+        style={{ backgroundImage: `url('${userInfos?.background}')` }}
+      >
+        <div className="absolute inset-0 bg-black opacity-80"></div>
+        <div className="relative text-left p-6 w-full h-full">
+          {userInfos.firstName && userInfos.lastName && (
+            <h1 className="text-2xl md:text-4xl font-bold text-white break-words">
+              {userInfos.firstName} {userInfos.lastName}
+            </h1>
+          )}
+          <p className="text-gray-300 font-bold">{userInfos.job}</p>
+          <span className="text-gray-300">
+            Membre depuis le {formatDate(userInfos.inscription)}
+          </span>
+
+          <div className="absolute bottom-6 right-6">
+            <ul className="flex flex-col md:flex-row items-center gap-2">
+              {userReseaux.map((reseau) => (
+                <li key={reseau.name}>
+                  <Link
+                    href={reseau.url as string}
+                    target="_blank"
+                    className="flex items-center justify-center w-8 h-8 border text-white hover:bg-white hover:text-gray-900 p-2 rounded-full cursor-pointer"
+                  >
+                    <reseau.icon />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="absolute left-6 -bottom-[70px] w-[150px] h-[150px] rounded-full overflow-hidden border">
+            <Image
+              src={userInfos?.image as string}
+              width={500}
+              height={500}
+              alt="Photo user"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  );
+}
