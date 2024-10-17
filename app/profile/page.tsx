@@ -47,7 +47,13 @@ export default function UsersPage() {
         ) : (
           filteredUser.map((user) => (
             <li key={user.idUser as string} className="w-full border rounded-md p-4 text-center">
-              <Image src={user?.image as string} alt={user?.firstName as string} width={900} height={600} className="w-32 h-32 block mx-auto rounded-full" />
+              <Image
+                src={user?.image ? user.image as string : '/images/default-avatar.png'}
+                alt={user?.firstName as string}
+                width={900}
+                height={600}
+                className="w-32 h-32 block mx-auto rounded-full"
+                />
               <div className="my-2 p-2">
                 <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName} {user?.lastName}</h4>
                 <span className="block text-sm italic text-white mb-3">{user?.job}</span>

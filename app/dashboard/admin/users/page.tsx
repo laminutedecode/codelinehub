@@ -77,15 +77,13 @@ const UsersList = () => {
             {filteredMembers.map((member) => (
               <tr key={member.email || member.idUser} className="border-b">
                 <td className="px-4 py-2 border">
-                  {member.image ? (
+                 
                     <img
-                      src={member.image || "/images/default-avatar.png"}
+                    src={member?.image ? member.image as string : '/images/default-avatar.png'}
                       alt={`${member.firstName || "Utilisateur"} ${member.lastName || ""}`}
                       className="w-12 h-12 rounded-full object-cover block mx-auto"
                     />
-                  ) : (
-                    "N/A"
-                  )}
+                
                 </td>
                 <td className="px-4 py-2 border text-center">
                   {member.firstName || ""} {member.lastName || ""}

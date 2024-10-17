@@ -23,8 +23,8 @@ export default function UserProfile({ userInfos }: UserProfileProps) {
     <div className="h-full w-full">
 
       <div
-        className="relative max-w-[1200px] h-[500px] mx-auto bg-fixed bg-center bg-cover md:border-l md:border-r"
-        style={{ backgroundImage: `url('${userInfos?.background}')` }}
+        className="relative max-w-[1200px] h-[500px] mx-auto bg-fixed bg-center bg-cover md:border-l md:border-r border-b"
+        style={{ backgroundImage: `url('${userInfos?.image ? userInfos.image as string : '/images/default-bg.jpg'}')` }}
       >
         <div className="absolute inset-0 bg-black opacity-80"></div>
         <div className="relative text-left p-6 w-full h-full">
@@ -54,14 +54,14 @@ export default function UserProfile({ userInfos }: UserProfileProps) {
             </ul>
           </div>
 
-          <div className="absolute left-6 -bottom-[70px] w-[150px] h-[150px] rounded-full overflow-hidden border">
-            <Image
-              src={userInfos?.image as string}
-              width={500}
-              height={500}
-              alt="Photo user"
-              className="w-full h-full object-cover"
-            />
+          <div className="absolute left-6 -bottom-[70px] w-[150px] h-[150px] rounded-full overflow-hidden border bg-white flex items-center justify-center">
+          <Image
+                src={userInfos?.image ? userInfos.image as string : '/images/default-avatar.png'}
+                alt={userInfos?.firstName as string}
+                width={500}
+                height={500}
+                className="w-32 h-32 block mx-auto rounded-full"
+                />
           </div>
         </div>
       </div>
