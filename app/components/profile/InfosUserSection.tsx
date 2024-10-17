@@ -9,7 +9,8 @@ export default function InfosUser({ userInfos }: UserProfileProps) {
     <div className="max-w-[1200px] mx-auto w-full md:border-l md:border-r pt-[100px] px-6">
         <div className="mb-4">
           <h3 className="text-lg md:text-xl font-bold text-white border-b border-purple-500 pb-2 mb-2">Biographie: </h3>
-          <p className="text-gray-300 text-md break-words">{userInfos?.description}</p>
+          
+          {userInfos?.description ? <p className="text-gray-300 text-md break-words">{userInfos?.description}</p> : <p className="text-gray-500">Non renseigné</p> }
         </div>
 
         <div>
@@ -25,7 +26,7 @@ export default function InfosUser({ userInfos }: UserProfileProps) {
                 </li>
               ))
             ) : (
-              <li className="text-gray-500">Aucun langage spécifié</li>
+              <li className="text-gray-500">Non renseigné</li>
             )}
           </ul>
         </div>

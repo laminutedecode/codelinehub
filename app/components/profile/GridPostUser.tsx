@@ -37,7 +37,7 @@ export default function GridPostUser( {id }: {id: string}) {
       <h3 className="text-lg md:text-xl font-bold text-white border-b border-purple-500 pb-2 mb-2 "> {posts.length} Post{posts.length > 1 && "s"}: </h3>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
         {posts.length === 0 ? (
-          <p>Aucun post trouvé.</p>
+          <p className="text-gray-500">Aucun post trouvé.</p>
         ) : (
           posts.map((post) => (
             <li  key={post.id} className="w-full border rounded-md overflow-hidden">
