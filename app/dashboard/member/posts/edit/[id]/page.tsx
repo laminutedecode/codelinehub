@@ -10,16 +10,14 @@ import { toast } from 'react-toastify';
 import { languages } from "@/database/data/data";
 import { PostsSchema } from "@/database/schemas/schemas";
 import { PostTypeData } from "@/database/types/types";
-import { getPostById, updatePost } from "@/database/services/postsServices"; 
-import { useParams } from 'next/navigation';
 import Loader from "@/app/components/Loader";
 import ButtonBack from "@/app/components/ButtonBack";
-import {useRouter} from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function EditPost() {
-
-  const router = useRouter()
-  const { id } = useParams(); 
+  const router = useRouter();
+  const { id } = useParams(); // ID récupéré ici
   const { user } = useContextAuth();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<PostTypeData>({
     resolver: yupResolver(PostsSchema),
@@ -28,46 +26,43 @@ export default function EditPost() {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageOldFile, setOldImageFile] = useState<String | null>(null);
+  const [imageOldFile, setOldImageFile] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("postId:", id); // Vérifiez que postId est correct
     if (id) {
       const fetchPostData = async () => {
         try {
-          const post = await getPostById(id as string);
-          console.log("Fetched Post:", post); // Vérifiez le post récupéré
+          const response = await fetch(`/api/posts/${id}`);
+          if (!response.ok) throw new Error('Erreur lors de la récupération du post');
+
+          const post = await response.json();
           if (post) {
-            // Remplir le formulaire avec les données récupérées
             setValue("title", post.title);
             setValue("description", post.description);
             setValue("category", post.category);
             setValue("postUrl", post.postUrl || "");
-            setImagePreview(post.image as string);
-            setOldImageFile(post.image as string);
-            
+            setImagePreview(post.image);
+            setOldImageFile(post.image);
           }
         } catch (error) {
           console.error("Erreur lors du chargement du post:", error);
           toast.error('Erreur lors du chargement du post');
         } finally {
-          setLoading(false); // Assurez-vous de mettre loading à false
+          setLoading(false);
         }
       };
 
       fetchPostData();
     } else {
-      setLoading(false); // Si pas d'ID, arrêter le chargement
+      setLoading(false);
     }
-  }, [id]);
+  }, [id, setValue]);
 
   const onSubmit = async (data: PostTypeData) => {
     try {
       let postImg = imagePreview || "";
-      const oldImage = imageOldFile as string;
-
-  
+      const oldImage = imageOldFile;
       const storage = getStorage();
 
       setIsUploading(true);
@@ -77,22 +72,32 @@ export default function EditPost() {
           const oldImageRef = ref(storage, oldImage);
           await deleteObject(oldImageRef);
         }
-        const storageRef = ref(getStorage(), `postsImages/${imageFile.name}${Date.now()}`);
+        const storageRef = ref(storage, `postsImages/${imageFile.name}${Date.now()}`);
         await uploadBytes(storageRef, imageFile);
         postImg = await getDownloadURL(storageRef);
       }
 
-      await updatePost(id as string, {
-        title: data.title,
-        description: data.description,
-        category: data.category,
-        postUrl: data.postUrl,
-        image: postImg,
-        authorId: user?.idUser as string, 
-        updatedAt: new Date(),
+      const response = await fetch(`/api/posts/updatedPost`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id, 
+          title: data.title,
+          description: data.description,
+          category: data.category,
+          postUrl: data.postUrl,
+          image: postImg,
+          authorId: user?.idUser as string,
+          updatedAt: new Date(),
+        }),
       });
-      router.push('/dashboard/member/posts')
+
+      if (!response.ok) throw new Error('Erreur lors de la mise à jour du post');
+
       toast.success('Post mis à jour avec succès');
+      router.push('/dashboard/member/posts');
     } catch (error) {
       toast.error('Erreur lors de la mise à jour du post');
       console.error("Erreur:", error);
@@ -102,15 +107,15 @@ export default function EditPost() {
   };
 
   if (loading) {
-    return  <Loader/>;
+    return <Loader />;
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full border p-8 rounded-md text-white">
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-        <div className="w-full  space-y-1 mb-4">
+        <div className="w-full space-y-1 mb-4">
           <h1 className="w-full text-xl md:text-4xl uppercase font-black">Editer post</h1>
-          <ButtonBack/>
+          <ButtonBack />
         </div>
       </div>
 

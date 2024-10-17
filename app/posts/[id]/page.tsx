@@ -1,7 +1,7 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getPostById } from "@/database/services/postsServices"; 
 import { getUserInfos } from "@/database/services/userService"; 
 import { UserTypeData, PostTypeData } from "@/database/types/types";
 import Loader from "@/app/components/Loader";
@@ -9,7 +9,8 @@ import HeaderPost from "@/app/components/posts/HeaderPost";
 import ContentPost from "@/app/components/posts/ContentPost";
 
 export default function PostSinglePage() {
-  const { id } = useParams();
+  
+  const { id } = useParams(); 
   
   const [dataPost, setDataPost] = useState<PostTypeData | null>(null);
   const [userInfos, setUserInfos] = useState<UserTypeData | null>(null);
@@ -21,17 +22,20 @@ export default function PostSinglePage() {
       setLoading(true); 
       try {
         if (id) {
-          const fetchedDataPost = await getPostById(id as string);
-          if (fetchedDataPost) {
-            setDataPost(fetchedDataPost);
-            const userData = await getUserInfos(fetchedDataPost.authorId as string);
-            setUserInfos(userData);
-          } else {
-            setError('Post non trouvé.');
+          const response = await fetch(`/api/posts/${id}`); 
+          
+          if (!response.ok) {
+            throw new Error('Post non trouvé.');
           }
+          const fetchedDataPost = await response.json();
+          setDataPost(fetchedDataPost);
+          const userData = await getUserInfos(fetchedDataPost.authorId as string);
+          setUserInfos(userData);
+        } else {
+          setError('ID du post est manquant.');
         }
       } catch (err) {
-        setError('Erreur lors de la récupération des informations du post.');
+        setError(err instanceof Error ? err.message : 'Erreur lors de la récupération des informations du post.');
       } finally {
         setLoading(false);
       }

@@ -1,14 +1,10 @@
 "use client";
 
-
 import Image from "next/image";
 import Link from "next/link";
 import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
-import { getUserPosts } from "@/database/services/postsServices";
 import { useContextAuth } from "@/database/contexts/AuthContext";
-
-
 
 export default function GridPostUser( {id }: {id: string}) {
 
@@ -17,14 +13,23 @@ export default function GridPostUser( {id }: {id: string}) {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-    
+      if (user?.idUser) { 
         try {
-          const userPosts = await getUserPosts(id); 
+          const response = await fetch(`/api/posts/getPostByAuthor`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: user.idUser }), 
+          });
+
+          if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');
+          const userPosts = await response.json();
           setPosts(userPosts);
         } catch (error) {
           console.error("Erreur lors de la récupération des posts de l'utilisateur:", error);
-        } 
-      
+        }
+      }
     };
 
     fetchUserPosts();
