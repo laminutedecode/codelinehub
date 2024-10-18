@@ -7,7 +7,8 @@ import { useContextAuth } from "@/database/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { FaUserAlt, FaUserShield } from "react-icons/fa";
 import { MdArticle } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
+import { IoIosSettings,IoIosChatbubbles } from "react-icons/io";
+
 
 
 export default function DashboardMenu() {
@@ -29,12 +30,14 @@ export default function DashboardMenu() {
   const menuDashboard = [
     { name: "Profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
+    { name: "Chats", icon: IoIosChatbubbles, path: "/dashboard/member/chats" },
     { name: "Paramètres", icon: IoIosSettings, path: "/dashboard/member/settings" },
   ];
-
+  
   const menuDashboardAdmin = [
     { name: "Profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
+    { name: "Chats", icon: IoIosChatbubbles, path: "/dashboard/member/chats" },
     { name: "Paramètres", icon: IoIosSettings, path: "/dashboard/member/settings" },
     { name: "Admin", icon: FaUserShield, path: "/dashboard/admin/users" },
   ];

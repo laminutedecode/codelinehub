@@ -8,6 +8,7 @@ import HeaderProfil from "@/app/components/profile/HeaderProfil";
 import UserInfosSection from "@/app/components/profile/InfosUserSection";
 import GridPostUser from "@/app/components/profile/GridPostUser";
 
+
 export default function ProfileSinglePage() {
   const { id } = useParams();
 

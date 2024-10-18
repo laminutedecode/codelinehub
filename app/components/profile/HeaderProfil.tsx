@@ -5,9 +5,14 @@ import { CgWebsite } from "react-icons/cg";
 import Image from "next/image";
 import Link from "next/link";
 import { UserProfileProps } from "@/database/types/types";
+import { useContextAuth } from "@/database/contexts/AuthContext";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 
 
 export default function HeaderUserProfile({ userInfos }: UserProfileProps) {
+
+  const {user} = useContextAuth();
+
 
   const userReseaux = [
     { name: "Instagram", url: userInfos.instagramUrl, icon: FaInstagramSquare },
@@ -35,6 +40,8 @@ export default function HeaderUserProfile({ userInfos }: UserProfileProps) {
             </h1>
           )}
           <p className="text-gray-300 font-bold">{userInfos.job}</p>
+
+          {user && <Link href={`/dashboard/member/chats/${userInfos.idUser}`} className="absolute top-6 right-6 flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"><IoChatbubbleEllipses /></Link>}
    
 
       

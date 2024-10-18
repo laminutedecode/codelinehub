@@ -52,3 +52,24 @@ export interface PostSingleProps {
 export interface UserProfileProps {
   userInfos: UserTypeData;
 }
+
+export interface ChatType {
+  chatId: string;
+  userSend: string;
+  nameUserSend: string;
+  nameUserReciper: string;
+  userReciper: string;
+}
+
+export interface MessageType {
+  id: string;
+  text: string;
+  nameUserSend: string;
+  nameUserReciper: string;
+  idUserSend: string;
+  idUserReciper: string;
+  imageUserSend: string;
+  imageUserReciper: string;
+  createdAt: number;
+  updatedAt: number;
+}
