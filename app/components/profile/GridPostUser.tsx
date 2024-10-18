@@ -21,7 +21,7 @@ export default function GridPostUserProfil( {id }: {id: string}) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: user.idUser }), 
+            body: JSON.stringify({ id }), 
           });
 
           if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');
