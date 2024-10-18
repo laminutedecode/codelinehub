@@ -33,6 +33,7 @@ export default function ChatsPage() {
               nameUserSend: data[chatId].nameUserSend || 'Nom non disponible', 
               userReciperPhoto: data[chatId].imageUserReciper || '/images/default-avatar.png', 
               updatedAt: data[chatId].updatedAt,
+              createdAt: data[chatId].createdAt || 0,
             }));
 
           setChats(userChats);
@@ -53,7 +54,7 @@ export default function ChatsPage() {
           <div>
             <div className="w-12 h-12 rounded-full overflow-hidden mr-4 bg-white mb-2">
               <img
-                src={chat.userReciperPhoto}
+                src={chat?.userReciperPhoto as string}
                 alt={`${chat.nameUserReciper}'s photo`}
                 className="w-full h-full object-cover"
               />

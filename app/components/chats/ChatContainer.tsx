@@ -7,8 +7,8 @@ import { MessageType } from '@/database/types/types';
 
 export default function ChatContainer({ id }: { id: string }) {
   const { user } = useContextAuth();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const messagesEndRef = useRef<HTMLDivElement>(null); // Référence pour défiler vers le bas
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     const messagesRef = ref(database, `chats/${id}/messages`);
@@ -16,7 +16,7 @@ export default function ChatContainer({ id }: { id: string }) {
     // S'abonner aux messages
     const unsubscribe = onValue(messagesRef, (snapshot) => {
       const messagesData = snapshot.val() || {};
-      const messagesList: Message[] = Object.keys(messagesData).map((key) => ({
+      const messagesList: MessageType[] = Object.keys(messagesData).map((key) => ({
         id: key,
         ...messagesData[key],
         createdAt: messagesData[key].createdAt,

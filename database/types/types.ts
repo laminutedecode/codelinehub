@@ -59,6 +59,10 @@ export interface ChatType {
   nameUserSend: string;
   nameUserReciper: string;
   userReciper: string;
+  userReciperPhoto?: string;
+  userSendPhooto?: string;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 export interface MessageType {

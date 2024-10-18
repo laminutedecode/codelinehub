@@ -6,6 +6,7 @@ import { useContextAuth } from '@/database/contexts/AuthContext';
 import { ref, set, serverTimestamp, get, child, query, orderByChild, equalTo } from 'firebase/database';
 import { doc, getDoc } from 'firebase/firestore'; 
 import { db } from '@/database/firebaseConfig'; 
+import { UserTypeData } from "@/database/types/types";
 
 export default function SendMessage({ id }: { id: string }) {
   const { user } = useContextAuth();
@@ -29,7 +30,7 @@ export default function SendMessage({ id }: { id: string }) {
   };
 
   const fetchUserSendInfo = async () => {
-    const userSendDocRef = doc(db, 'members', user?.idUser); 
+    const userSendDocRef = doc(db, 'members', user?.idUser as string); 
     const userSendDoc = await getDoc(userSendDocRef);
     
     if (userSendDoc.exists()) {
