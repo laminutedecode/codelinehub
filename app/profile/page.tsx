@@ -28,7 +28,7 @@ export default function UsersPage() {
       }
     };
     fetchMembers(); 
-  }, []); 
+  }, [members]); 
 
   if (loading) {
     return <Loader />;
