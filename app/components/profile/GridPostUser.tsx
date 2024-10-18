@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
 import { useContextAuth } from "@/database/contexts/AuthContext";
+import { FaEye } from "react-icons/fa";
 
 export default function GridPostUserProfil( {id }: {id: string}) {
 
@@ -48,7 +49,9 @@ export default function GridPostUserProfil( {id }: {id: string}) {
                 <Image src={post?.image as string} alt={post?.title} width={300} height={100} className="w-full" />
                 <div className="my-2 p-2">
                 <h2 className="text-sm font-bold text-white break-words mb-2">{post.title}</h2>
-                <Link href={`/posts/${post.id}`} className="text-sm text-purple-500 hover:text-purple-800">Lire le post</Link>
+                <Link title={`Lire article ${post?.title}`} href={`/posts/${post.id}`} className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
+                  <FaEye/>
+                </Link>
                 </div>
                 
               

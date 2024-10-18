@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 export default function EditPost() {
   const router = useRouter();
-  const { id } = useParams(); // ID récupéré ici
+  const { id } = useParams(); 
   const { user } = useContextAuth();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<PostTypeData>({
     resolver: yupResolver(PostsSchema),
@@ -33,7 +33,13 @@ export default function EditPost() {
     if (id) {
       const fetchPostData = async () => {
         try {
-          const response = await fetch(`/api/posts/${id}`);
+          const response = await fetch(`/api/posts/getPostById`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id}), 
+          });
           if (!response.ok) throw new Error('Erreur lors de la récupération du post');
 
           const post = await response.json();

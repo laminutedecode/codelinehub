@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
 import Loader from "@/app/components/Loader";
+import { FaEye,FaUser } from "react-icons/fa";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState<PostTypeData[]>([]);
@@ -84,9 +85,14 @@ export default function PostsPage() {
               )}
               <div className="my-2 p-2">
                 <h2 className="text-md font-bold text-white line-clamp-2 mb-2">{post.title}</h2>
-                <Link href={`/posts/${post.id}`} className="text-sm text-purple-500 hover:text-purple-800">
-                  Lire le post
-                </Link>
+                <div className="flex items-center justify-end gap-2">
+                  <Link title={`Lire article ${post?.title}`} href={`/posts/${post.id}`} className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
+                    <FaEye/>
+                  </Link>
+                  <Link title="Voir profil de l'auteur" href={`/profile/${post.authorId}`} className="inline-flex items-center gap-2 bg-orange-800 hover:bg-orange-500 px-3 py-1.5 text-white rounded-md text-sm">
+                    <FaUser/>
+                  </Link>
+                </div>
               </div>
             </li>
           ))
