@@ -1,20 +1,22 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/database/firebaseConfig";
-import { PostTypeData } from "@/database/types/types";
+import { NextResponse } from 'next/server';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '@/database/firebaseConfig';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    try {
-      const postData: PostTypeData = req.body;
-      const postsCollection = collection(db, "posts");
-      await addDoc(postsCollection, postData);
-      res.status(201).json({ message: "Post added successfully" });
-    } catch (err) {
-      res.status(500).json({ error: "Error adding post" });
+export async function POST(request: Request) {
+  try {
+    const { currentUserId, ...postData } = await request.json();
+    
+    if (!currentUserId) {
+      return NextResponse.json({ error: 'Accès refusé. Vous devez être connecté.' }, { status: 403 });
     }
-  } else {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    
+    const postsCollection = collection(db, 'posts');
+
+    await addDoc(postsCollection, postData);
+    
+    return NextResponse.json({ message: "Post added successfully" }, { status: 201 });
+  } catch (err) {
+    console.error("Error adding post:", err);
+    return NextResponse.json({ error: "Error adding post" }, { status: 500 });
   }
 }

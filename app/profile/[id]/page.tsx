@@ -1,7 +1,7 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getUserInfos } from "@/database/services/userService";
 import { UserTypeData } from "@/database/types/types";
 import Loader from "@/app/components/Loader";
 import HeaderProfil from "@/app/components/profile/HeaderProfil";
@@ -21,7 +21,19 @@ export default function ProfileSinglePage() {
 
       setLoading(true); 
       try {
-        const fetchedUserInfos = await getUserInfos(id as string);
+        const response = await fetch(`/api/users/getUser`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id }) 
+        });
+
+        if (!response.ok) {
+          throw new Error('Informations utilisateur non trouvées.');
+        }
+
+        const fetchedUserInfos = await response.json();
         setUserInfos(fetchedUserInfos);
       } catch (err) {
         setError('Erreur lors de la récupération des informations utilisateur.');

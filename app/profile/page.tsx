@@ -2,13 +2,41 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {  useState } from "react";
-import useAdmin from "@/database/hooks/useAdmin";
+import { useState, useEffect } from "react";
 import Loader from "@/app/components/Loader";
+import { UserTypeData } from "@/database/types/types";
 
 export default function UsersPage() {
-  const { members, loading } = useAdmin();
+  const [members, setMembers] = useState<UserTypeData[]>([]);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState<string | null>(null); 
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await fetch('/api/users/getUsersAll'); 
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des membres');
+        }
+        const data = await response.json();
+        setMembers(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false); 
+      }
+    };
+    fetchMembers(); 
+  }, []); 
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
 
   const filteredUser = members.filter((user) => {
     const firstName = user?.firstName?.toLowerCase() || "";
@@ -21,10 +49,6 @@ export default function UsersPage() {
       job.includes(searchQuery.toLowerCase())
     );
   });
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <div className="max-w-[1200px] mx-auto w-full md:border-l md:border-r pt-4 px-6">
@@ -48,16 +72,16 @@ export default function UsersPage() {
           filteredUser.map((user) => (
             <li key={user.idUser as string} className="w-full border rounded-md p-4 text-center">
               <div className="w-32 h-32 mx-auto bg-white rounded-full overflow-hidden flex items-center justify-center">
-              <Image
-                src={user?.image ? user.image as string : '/images/default-avatar.png'}
-                alt={user?.firstName as string}
-                width={900}
-                height={600}
-                className="w-full h-full object-cover"
+                <Image
+                  src={user?.image ? user.image as string : '/images/default-avatar.png'}
+                  alt={user?.firstName as string}
+                  width={900}
+                  height={600}
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="my-2 p-2">
-                <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName }` : 'Utilisateur'} </h4>
+                <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName}` : 'Utilisateur'}</h4>
                 {user?.job && <span className="block text-sm italic text-white mb-3">{user?.job}</span>}
                 <Link href={`/profile/${user.idUser}`} className="text-sm text-purple-500 hover:text-purple-800">
                   Voir profil

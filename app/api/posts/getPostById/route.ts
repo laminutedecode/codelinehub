@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/database/firebaseConfig';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params; 
+export async function POST(req: Request) {
+  const { id } = await req.json();
 
   try {
     const postDoc = doc(db, 'posts', id);

@@ -2,7 +2,6 @@
 
 import Menu from "@/app/components/dashboard/Menu";
 import { useContextAuth } from '@/database/contexts/AuthContext';
-import { useEffect } from "react";
 import Loader from "../components/Loader";
 
 export default function DashboardLayout({ children }: Readonly<{

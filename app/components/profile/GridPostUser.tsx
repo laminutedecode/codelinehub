@@ -6,7 +6,7 @@ import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
 import { useContextAuth } from "@/database/contexts/AuthContext";
 
-export default function GridPostUser( {id }: {id: string}) {
+export default function GridPostUserProfil( {id }: {id: string}) {
 
   const { user } = useContextAuth(); 
   const [posts, setPosts] = useState<PostTypeData[]>([]);
@@ -34,7 +34,6 @@ export default function GridPostUser( {id }: {id: string}) {
 
     fetchUserPosts();
   }, [user, id]);
-
 
 
   return (

@@ -1,24 +1,20 @@
 import { NextResponse } from 'next/server';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/database/firebaseConfig';
-import { UserTypeData } from '@/database/types/types';
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url); // Extraction des paramètres d'URL
-  const id = searchParams.get("id"); // Récupération de l'ID
-
+export async function POST(req: Request) {
+  const { id } = await req.json();
   try {
-    const usersCollection = collection(db, "members");
-    const q = query(usersCollection, where("idUser", "==", id as string));
-    const querySnapshot = await getDocs(q);
-    const user: UserTypeData[] = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }) as UserTypeData);
+    const postDoc = doc(db, 'members', id);
+    const postSnapshot = await getDoc(postDoc);
 
-    return NextResponse.json(user);
+    if (postSnapshot.exists()) {
+      return NextResponse.json(postSnapshot.data());
+    } else {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Error fetching user' }, { status: 500 });
+    return NextResponse.json({ error: 'Error fetching post' }, { status: 500 });
   }
 }

@@ -4,14 +4,11 @@ import { FaGithub, FaYoutube, FaInstagramSquare } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDate } from "@/database/utils/formatDate";
-import { UserTypeData } from "@/database/types/types";
+import { UserProfileProps } from "@/database/types/types";
 
-interface UserProfileProps {
-  userInfos: UserTypeData;
-}
 
-export default function UserProfile({ userInfos }: UserProfileProps) {
+export default function HeaderUserProfile({ userInfos }: UserProfileProps) {
+
   const userReseaux = [
     { name: "Instagram", url: userInfos.instagramUrl, icon: FaInstagramSquare },
     { name: "Website", url: userInfos.websiteUrl, icon: CgWebsite },
@@ -38,9 +35,7 @@ export default function UserProfile({ userInfos }: UserProfileProps) {
             </h1>
           )}
           <p className="text-gray-300 font-bold">{userInfos.job}</p>
-          <span className="text-gray-300">
-            Membre depuis le {formatDate(userInfos.inscription)}
-          </span>
+   
 
       
               <div className="absolute bottom-6 right-6">
@@ -57,9 +52,7 @@ export default function UserProfile({ userInfos }: UserProfileProps) {
                     </li>
                   ))}
                 </ul>
-              </div>
-          
-            
+              </div>           
 
           <div className="absolute left-6 -bottom-[70px] w-[150px] h-[150px] rounded-full overflow-hidden border bg-white flex items-center justify-center">
           <Image

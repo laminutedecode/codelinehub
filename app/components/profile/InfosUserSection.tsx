@@ -1,8 +1,4 @@
-import { UserTypeData } from "@/database/types/types";
-
-interface UserProfileProps {
-  userInfos: UserTypeData;
-}
+import { UserProfileProps } from "@/database/types/types";
 
 export default function InfosUser({ userInfos }: UserProfileProps) {
   return (

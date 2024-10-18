@@ -1,33 +1,39 @@
 'use client';
-import useAdmin from "@/database/hooks/useAdmin";
+import { checkAdminRole } from "@/database/services/services";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaUserAlt, FaUserShield } from "react-icons/fa";
 import ButtonSignOut from "./ButtonSignOut";
 import { useContextAuth } from "@/database/contexts/AuthContext";
 import { MdArticle } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 export default function DashboardMenu() {
   const pathname = usePathname();
-  const { isUserAdmin } = useAdmin(); 
-  const { user } = useContextAuth(); 
+  const { user } = useContextAuth();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  const isAdmin = isUserAdmin(user?.idUser as string);
+  useEffect(() => {
+    const verifyAdmin = async () => {
+      if (user?.idUser) {
+        const adminStatus = await checkAdminRole(user.idUser as string);
+        setIsAdmin(adminStatus);
+      }
+    };
+
+    verifyAdmin();
+  }, [user?.idUser]);
 
   const menuDashboard = [
     { name: "Profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
   ];
-  
-  
-  
+
   const menuDashboardAdmin = [
     { name: "Votre profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
-    
-    { name: "Admin", icon: FaUserShield , path: "/dashboard/admin/users" },
+    { name: "Admin", icon: FaUserShield, path: "/dashboard/admin/users" },
   ];
-
 
   const menuToDisplay = isAdmin ? menuDashboardAdmin : menuDashboard;
 

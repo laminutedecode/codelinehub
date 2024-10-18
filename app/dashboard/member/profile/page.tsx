@@ -4,7 +4,6 @@ import Loader from "@/app/components/Loader";
 import { useContextAuth } from '@/database/contexts/AuthContext';
 import { jobsList } from "@/database/data/data";
 import { UpdateUserSchema } from "@/database/schemas/schemas";
-import { getUserInfos, updateUserInfo } from "@/database/services/userService";
 import { UserTypeData } from "@/database/types/types";
 import { formatDate } from "@/database/utils/formatDate";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,8 +37,21 @@ export default function EditPageUser() {
     const fetchUserData = async () => {
       try {
         if (user?.idUser) {
-          const fetchedUserInfos = await getUserInfos(user.idUser);
+          const response = await fetch('/api/users/getUser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: user.idUser }), 
+          });
+  
+          if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des informations utilisateur.');
+          }
+  
+          const fetchedUserInfos = await response.json();
           setUserInfos(fetchedUserInfos);
+  
           if (fetchedUserInfos) {
             setValue("firstName", fetchedUserInfos.firstName || "");
             setValue("lastName", fetchedUserInfos.lastName || "");
@@ -60,10 +72,10 @@ export default function EditPageUser() {
         setLoading(false);
       }
     };
-
+  
     fetchUserData();
   }, [user?.idUser]);
-
+  
   const onSubmit = async (data: UserTypeData) => {
     try {
       let userImgProfile = data.image || "";
@@ -78,7 +90,7 @@ export default function EditPageUser() {
       // Vérifie si une nouvelle image de profil est fournie
       if (imageFile) {
         if (oldImage && !oldImage.includes('googleusercontent.com') && !oldImage.includes('githubusercontent.com')) {
-          // Suppression de l'ancienne image de profil uniquement si ce n'est pas une image de Google ou GitHub
+          // Suppression de l'ancienne image de profil
           const oldImageRef = ref(storage, oldImage);
           await deleteObject(oldImageRef);
         }
@@ -101,19 +113,32 @@ export default function EditPageUser() {
         userImgBackground = await getDownloadURL(storageRef);
       }
   
-      await updateUserInfo(user?.idUser as string, {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        job: data.job,
-        description: data.description,
-        websiteUrl: data.websiteUrl,
-        youtubeUrl: data.youtubeUrl,
-        instagramUrl: data.instagramUrl,
-        githubUrl: data.githubUrl,
-        image: userImgProfile,
-        background: userImgBackground,
-        languages: data.languages, 
+      // Appel à la route PUT pour mettre à jour les informations utilisateur
+      const response = await fetch('/api/users/updatedUser', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idUser: userInfos?.idUser,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          job: data.job,
+          description: data.description,
+          websiteUrl: data.websiteUrl,
+          youtubeUrl: data.youtubeUrl,
+          instagramUrl: data.instagramUrl,
+          githubUrl: data.githubUrl,
+          image: userImgProfile,
+          background: userImgBackground,
+          languages: data.languages,
+          currentUserId: userInfos?.idUser,
+        }),
       });
+  
+      if (!response.ok) {
+        throw new Error('Erreur lors de la mise à jour des informations utilisateur.');
+      }
   
       toast.success('Profil mis à jour avec succès');
     } catch (error) {
@@ -123,6 +148,18 @@ export default function EditPageUser() {
       setIsUploading(false);
     }
   };
+  
+  if (loading) {
+    return <Loader />;
+  }
+  
+  if (error) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center text-white">
+        <h2 className="uppercase font-black text-2xl text-center">{error}</h2>
+      </div>
+    );
+  }
   
   
 
@@ -145,7 +182,6 @@ export default function EditPageUser() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
         <div className="w-full flex flex-col space-y-1">
           <h1 className="w-full text-xl md:text-4xl uppercase font-black">Dashboard</h1>
-          <span className="text-gray-500">Membre depuis le {formatDate(userInfos?.inscription)}</span>
         </div>
 
         <div className="w-full mb-2 flex flex-col space-y-2">

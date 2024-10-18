@@ -1,44 +1,72 @@
-'use client';
+"use client"
 
 import Loader from "@/app/components/Loader";
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import useAdmin from "@/database/hooks/useAdmin";
+import { UserTypeData } from "@/database/types/types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { toast } from "react-toastify";
+import { getAuth } from 'firebase/auth';
 
 const UsersList = () => {
-  const router = useRouter();
-  const { isUserAdmin, deleteUser } = useAdmin(); 
-  const { user } = useContextAuth(); 
-  const { members, loading, error } = useAdmin();
-  
+
+  const {currentUser} = getAuth();
+  const idCurrentUser = currentUser?.uid;
+
+
+  const [members, setMembers] = useState<UserTypeData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); 
-  
-  const isAdmin = isUserAdmin(user?.idUser as string);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await fetch('/api/users/getUsersAll'); 
+        if (!response.ok) throw new Error("Erreur lors de la récupération des membres");
+        const data = await response.json();
+        setMembers(data);
+      } catch (err: any) {
+        console.error("Error fetching members:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMembers();
+  }, []);
 
   if (loading) {
     return <Loader />;
   }
 
-  if (!isAdmin || error) {
-    router.push('/dashboard/member/profile');
-  }
-
-
   const handleDelete = async (userId: string) => {
     const confirmDelete = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
     if (confirmDelete) {
-      await deleteUser(userId);
-      toast.success("Utilisateur supprimé avec succès.");
-      router.push('/dashboard/member/profile');
+      try {
+        const response = await fetch('/api/users/deleteUser', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ idUser: userId , currentUserId: idCurrentUser}),
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur lors de la suppression de l'utilisateur.");
+        }
+
+        const data = await response.json();
+        toast.success(data.message);
+        setMembers(prevMembers => prevMembers.filter(member => member.idUser !== userId));
+      } catch (err: any) {
+        toast.error(err.message || "Erreur inconnue lors de la suppression de l'utilisateur.");
+      }
     }
   };
 
- 
   const filteredMembers = members.filter((member) =>
     `${member.firstName || ""} ${member.lastName || ""}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (member.email && member.email.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -47,7 +75,6 @@ const UsersList = () => {
   return (
     <div className="container mx-auto px-4">
       <h1 className="w-full text-xl md:text-4xl uppercase font-black mb-6 text-white">Liste des utilisateurs</h1>
-
 
       <div className="mb-4">
         <input
@@ -77,13 +104,11 @@ const UsersList = () => {
             {filteredMembers.map((member) => (
               <tr key={member.email || member.idUser} className="border-b">
                 <td className="px-4 py-2 border">
-                 
-                    <img
-                    src={member?.image ? member.image as string : '/images/default-avatar.png'}
-                      alt={`${member.firstName || "Utilisateur"} ${member.lastName || ""}`}
-                      className="w-12 h-12 rounded-full object-cover block mx-auto"
-                    />
-                
+                  <img
+                    src={member?.image ? member.image : '/images/default-avatar.png'}
+                    alt={`${member.firstName || "Utilisateur"} ${member.lastName || ""}`}
+                    className="w-12 h-12 rounded-full object-cover block mx-auto"
+                  />
                 </td>
                 <td className="px-4 py-2 border text-center">
                   {member.firstName || ""} {member.lastName || ""}
@@ -98,7 +123,7 @@ const UsersList = () => {
                     <FaEye />
                   </Link>
                   <Link
-                    href={`/dashboard/admin/edit/${member.idUser}`}
+                    href={`/dashboard/admin/edit/${member?.idUser}`}
                     className="bg-yellow-500 hover:bg-yellow-800 px-3 py-1.5 text-white rounded-md"
                   >
                     <MdEditSquare />

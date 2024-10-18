@@ -4,14 +4,17 @@ import { db } from '@/database/firebaseConfig';
 
 export async function PUT(req: NextRequest) {
   try {
-    const { id, ...updatedUserData } = await req.json();
+    const { idUser, currentUserId, ...updatedUserData } = await req.json();
+    
+    if (!currentUserId) {
+      return NextResponse.json({ error: 'Utilisateur non connecté.' }, { status: 403 });
+    }
 
-
-    if (!id) {
+    if (!idUser) {
       throw new Error('ID is missing');
     }
 
-    const userDoc = doc(db, 'members', id);
+    const userDoc = doc(db, 'members', idUser);
     await updateDoc(userDoc, updatedUserData);
     
     return NextResponse.json({ message: 'User updated successfully' });
@@ -20,4 +23,3 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: 'Error updating user' }, { status: 500 });
   }
 }
-

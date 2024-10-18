@@ -26,7 +26,7 @@ export interface UserTypeData {
   role?: string;
   email?: string;
   description?: string;
-  inscription?: Date;
+  inscription?: Date  | string;
   image?: string;
   background?: string;
   languages?: string[]; 
@@ -44,4 +44,11 @@ export type PostTypeData = {
   updatedAt?: Date | string;
 };
 
+export interface PostSingleProps {
+  userInfos: UserTypeData;  
+  postData: PostTypeData;    
+}
 
+export interface UserProfileProps {
+  userInfos: UserTypeData;
+}

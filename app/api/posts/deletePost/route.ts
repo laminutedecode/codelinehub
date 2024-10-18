@@ -4,10 +4,14 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import { db } from "@/database/firebaseConfig";
 
 export async function DELETE(req: NextRequest) {
-  const { id } = await req.json();  // Récupère l'ID depuis le corps de la requête
+  const { id, currentUserId } = await req.json();  
   const postDocRef = doc(db, "posts", id);
 
   try {
+
+    if (!currentUserId) {
+      return NextResponse.json({ error: 'Utilisateur non connecté.' }, { status: 403 });
+    }
     const postSnapshot = await getDoc(postDocRef);
 
     if (!postSnapshot.exists()) {
@@ -22,10 +26,10 @@ export async function DELETE(req: NextRequest) {
       const decodedUrl = decodeURIComponent(imageUrl);
       const imagePath = decodedUrl.split("/").slice(-2).join("/").split("?")[0];
       const imageRef = ref(storage, imagePath);
-      await deleteObject(imageRef);  // Supprime l'image liée au post
+      await deleteObject(imageRef);  
     }
 
-    await deleteDoc(postDocRef);  // Supprime le document du post
+    await deleteDoc(postDocRef);  
     return NextResponse.json({ message: "Post deleted successfully" });
 
   } catch (err) {

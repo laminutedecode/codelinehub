@@ -2,14 +2,12 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getUserInfos } from "@/database/services/userService"; 
 import { UserTypeData, PostTypeData } from "@/database/types/types";
 import Loader from "@/app/components/Loader";
 import HeaderPost from "@/app/components/posts/HeaderPost";
 import ContentPost from "@/app/components/posts/ContentPost";
 
 export default function PostSinglePage() {
-  
   const { id } = useParams(); 
   
   const [dataPost, setDataPost] = useState<PostTypeData | null>(null);
@@ -22,14 +20,34 @@ export default function PostSinglePage() {
       setLoading(true); 
       try {
         if (id) {
-          const response = await fetch(`/api/posts/${id}`); 
+          const response = await fetch(`/api/posts/getPostById`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id }) 
+          }); 
           
           if (!response.ok) {
             throw new Error('Post non trouvé.');
           }
+          
           const fetchedDataPost = await response.json();
           setDataPost(fetchedDataPost);
-          const userData = await getUserInfos(fetchedDataPost.authorId as string);
+  
+          const userResponse = await fetch(`/api/users/getUser`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: fetchedDataPost.authorId })
+          });
+  
+          if (!userResponse.ok) {
+            throw new Error('Informations utilisateur non trouvées.');
+          }
+          
+          const userData = await userResponse.json();
           setUserInfos(userData);
         } else {
           setError('ID du post est manquant.');
@@ -40,9 +58,10 @@ export default function PostSinglePage() {
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, [id]); 
+  }, [id]);
+  
 
   if (loading) { 
     return <Loader />; 

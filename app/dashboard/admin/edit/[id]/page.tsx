@@ -1,12 +1,11 @@
-"use client";
+"use client"
 
 import ButtonBack from "@/app/components/ButtonBack";
 import Loader from "@/app/components/Loader";
 import { useContextAuth } from '@/database/contexts/AuthContext';
 import { jobsList } from "@/database/data/data";
-import useAdmin from "@/database/hooks/useAdmin";
+import { checkAdminRole } from "@/database/services/services";
 import { UpdateUserSchema } from "@/database/schemas/schemas";
-import { getUserInfos, updateUserInfo } from "@/database/services/userService";
 import { UserTypeData } from "@/database/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -16,16 +15,39 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { languages } from "@/database/data/data";
-import { formatDate } from "@/database/utils/formatDate";
+import { getAuth } from 'firebase/auth';
+
+
 
 export default function EditUserAdmin() {
+
+
+  const {currentUser} = getAuth();
+  const idCurrentUser = currentUser?.uid;
   const { id } = useParams();
-  const router = useRouter()
-  const { isUserAdmin } = useAdmin(); 
-  const { user } = useContextAuth();
+  const router = useRouter();
+  const {user} = useContextAuth()
+
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+
   const { register, handleSubmit, setValue, getValues } = useForm<UserTypeData>({
     resolver: yupResolver(UpdateUserSchema),
   });
+
+  useEffect(() => {
+    const verifyAdmin = async () => {
+      if (user?.idUser) {
+        const adminStatus = await checkAdminRole(user.idUser as string);
+        setIsAdmin(adminStatus);
+      }
+      if(!setIsAdmin){
+        router.push('/dashboard/member/profile')
+      }
+    };
+
+    verifyAdmin();
+  }, [user?.idUser]);
+
 
 
   const [userInfos, setUserInfos] = useState<UserTypeData | null>(null);
@@ -38,32 +60,36 @@ export default function EditUserAdmin() {
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
 
-  // Vérifiez l'accès en dehors des hooks
-  const isAdmin = isUserAdmin(user?.idUser as string);
-
-  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (user?.idUser) {
-          const fetchedUserInfos = await getUserInfos(id as string);
-          setUserInfos(fetchedUserInfos);
-          if (fetchedUserInfos) {
-            setValue("firstName", fetchedUserInfos.firstName || "");
-            setValue("lastName", fetchedUserInfos.lastName || "");
-            setValue("job", fetchedUserInfos.job || "");
-            setValue("description", fetchedUserInfos.description || "");
-            setValue("githubUrl", fetchedUserInfos.githubUrl || "");
-            setValue("youtubeUrl", fetchedUserInfos.youtubeUrl || "");
-            setValue("websiteUrl", fetchedUserInfos.websiteUrl || "");
-            setValue("instagramUrl", fetchedUserInfos.instagramUrl || "");
-            setValue("image", fetchedUserInfos.image || "");
-            setValue("background", fetchedUserInfos.background || "");
-            setValue("languages", fetchedUserInfos.languages || []); // Assurez-vous que votre schéma prend en charge un tableau
-          }
+        const response = await fetch(`/api/users/getUser`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: id, currentUserId: idCurrentUser }), 
+        });
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des informations utilisateur.');
         }
-      } catch (err) {
-        setError('Erreur lors de la récupération des informations utilisateur.');
+        const fetchedUserInfos = await response.json();
+        setUserInfos(fetchedUserInfos);
+        if (fetchedUserInfos) {
+          setValue("firstName", fetchedUserInfos.firstName || "");
+          setValue("lastName", fetchedUserInfos.lastName || "");
+          setValue("job", fetchedUserInfos.job || "");
+          setValue("description", fetchedUserInfos.description || "");
+          setValue("githubUrl", fetchedUserInfos.githubUrl || "");
+          setValue("youtubeUrl", fetchedUserInfos.youtubeUrl || "");
+          setValue("websiteUrl", fetchedUserInfos.websiteUrl || "");
+          setValue("instagramUrl", fetchedUserInfos.instagramUrl || "");
+          setValue("image", fetchedUserInfos.image || "");
+          setValue("background", fetchedUserInfos.background || "");
+          setValue("languages", fetchedUserInfos.languages || []);
+        }
+      } catch (err: any) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -77,53 +103,65 @@ export default function EditUserAdmin() {
       let userImgProfile = data.image || "";
       let userImgBackground = data.background || "";
       setIsUploading(true);
-  
+
       const oldImage = userInfos?.image;
       const oldImageBackground = userInfos?.background;
-  
+
       const storage = getStorage();
-  
+
       // Vérifie si une nouvelle image de profil est fournie
       if (imageFile) {
         if (oldImage && !oldImage.includes('googleusercontent.com') && !oldImage.includes('githubusercontent.com')) {
-          // Suppression de l'ancienne image de profil uniquement si ce n'est pas une image de Google ou GitHub
           const oldImageRef = ref(storage, oldImage);
           await deleteObject(oldImageRef);
         }
-  
+
         const storageRef = ref(storage, `usersImages/${imageFile.name}${Date.now()}`);
         await uploadBytes(storageRef, imageFile);
         userImgProfile = await getDownloadURL(storageRef);
       }
-  
+
       // Vérifie si une nouvelle image de fond est fournie
       if (backgroundFile) {
         if (oldImageBackground) {
-          // Suppression de l'ancienne image de fond
           const oldImageBackgroundRef = ref(storage, oldImageBackground);
           await deleteObject(oldImageBackgroundRef);
         }
-  
+
         const storageRef = ref(storage, `backgroundImages/${backgroundFile.name}${Date.now()}`);
         await uploadBytes(storageRef, backgroundFile);
         userImgBackground = await getDownloadURL(storageRef);
       }
-  
-      await updateUserInfo(id as string, {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        job: data.job,
-        description: data.description,
-        websiteUrl: data.websiteUrl,
-        youtubeUrl: data.youtubeUrl,
-        instagramUrl: data.instagramUrl,
-        githubUrl: data.githubUrl,
-        image: userImgProfile,
-        background: userImgBackground,
-        languages: data.languages, 
+
+      // Remplacer updateUserInfo par un appel à l'API
+      const response = await fetch(`/api/users/updatedUser`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idUser: id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          job: data.job,
+          description: data.description,
+          websiteUrl: data.websiteUrl,
+          youtubeUrl: data.youtubeUrl,
+          instagramUrl: data.instagramUrl,
+          githubUrl: data.githubUrl,
+          image: userImgProfile,
+          background: userImgBackground,
+          languages: data.languages,
+          currentUserId: idCurrentUser,
+        }),
       });
-      router.push('/dashboard/admin/users')
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la mise à jour du profil.');
+      }
+
       toast.success('Profil mis à jour avec succès');
+      router.push('/dashboard/admin/users');
     } catch (error) {
       toast.error('Erreur lors de la mise à jour du profil');
       console.error("Erreur:", error);
@@ -132,7 +170,7 @@ export default function EditUserAdmin() {
     }
   };
 
-  if (loading) { return <Loader />;}
+  if (loading) { return <Loader />; }
 
   if (error) {
     return (
@@ -145,14 +183,12 @@ export default function EditUserAdmin() {
   if (!isAdmin) {
     router.push('/dashboard/member/profile')
   }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full border p-8 rounded-md text-white">
     <div className="flex flex-col md:flex-row items-center justify-center gap-4">
       <div className="w-full ">
         <ButtonBack />
         <h1 className="w-full text-xl md:text-4xl uppercase font-black">Editer membre</h1>
-        <span className="text-gray-500">Membre depuis le {formatDate(userInfos?.inscription)}</span>
       </div>
 
       <div className="w-full mb-2 flex flex-col space-y-2">

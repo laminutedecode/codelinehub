@@ -4,7 +4,7 @@ import React, { createContext, useContext, ReactNode, useState, useEffect } from
 import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import { auth } from '@/database/firebaseConfig';
-import { addUserToMemberCollection } from '@/database/services/authService';
+import { addUserToMemberCollection } from '@/database/services/services';
 import { AuthContextType, UserTypeData } from '../types/types';
 
 const GoogleProviderAuth = new GoogleAuthProvider();

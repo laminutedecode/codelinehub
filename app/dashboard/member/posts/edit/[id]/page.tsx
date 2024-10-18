@@ -91,6 +91,7 @@ export default function EditPost() {
           image: postImg,
           authorId: user?.idUser as string,
           updatedAt: new Date(),
+          currentUserId: user?.idUser,
         }),
       });
 
