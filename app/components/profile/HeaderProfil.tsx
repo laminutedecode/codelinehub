@@ -21,7 +21,7 @@ export default function HeaderUserProfile({ userInfos }: UserProfileProps) {
 
       <div
         className="relative max-w-[1200px] h-[500px] mx-auto bg-fixed bg-center bg-cover md:border-l md:border-r border-b"
-        style={{ backgroundImage: `url('${userInfos?.image ? userInfos.image as string : '/images/default-bg.jpg'}')` }}
+        style={{ backgroundImage: `url('${userInfos?.background ? userInfos.background as string : '/images/default-bg.jpg'}')` }}
       >
         <div className="absolute inset-0 bg-black opacity-80"></div>
         <div className="relative text-left p-6 w-full h-full">

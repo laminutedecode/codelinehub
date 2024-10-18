@@ -2,11 +2,13 @@
 import { checkAdminRole } from "@/database/services/services";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaUserAlt, FaUserShield } from "react-icons/fa";
 import ButtonSignOut from "./ButtonSignOut";
 import { useContextAuth } from "@/database/contexts/AuthContext";
-import { MdArticle } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { FaUserAlt, FaUserShield } from "react-icons/fa";
+import { MdArticle } from "react-icons/md";
+import { IoIosSettings } from "react-icons/io";
+
 
 export default function DashboardMenu() {
   const pathname = usePathname();
@@ -27,11 +29,13 @@ export default function DashboardMenu() {
   const menuDashboard = [
     { name: "Profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
+    { name: "Paramètres", icon: IoIosSettings, path: "/dashboard/member/settings" },
   ];
 
   const menuDashboardAdmin = [
-    { name: "Votre profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
+    { name: "Profil", icon: FaUserAlt, path: "/dashboard/member/profile" },
     { name: "Posts", icon: MdArticle, path: "/dashboard/member/posts" },
+    { name: "Paramètres", icon: IoIosSettings, path: "/dashboard/member/settings" },
     { name: "Admin", icon: FaUserShield, path: "/dashboard/admin/users" },
   ];
 
