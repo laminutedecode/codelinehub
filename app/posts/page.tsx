@@ -37,7 +37,7 @@ export default function PostsPage() {
     
 
     fetchAllPosts();
-  }, [posts]);
+  }, [posts, loading]);
 
  
   const filteredPosts = posts.filter((post) => {

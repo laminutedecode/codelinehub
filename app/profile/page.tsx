@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Loader from "@/app/components/Loader";
 import { UserTypeData } from "@/database/types/types";
+import { FaEye } from "react-icons/fa";
 
 export default function UsersPage() {
   const [members, setMembers] = useState<UserTypeData[]>([]);
@@ -28,7 +29,7 @@ export default function UsersPage() {
       }
     };
     fetchMembers(); 
-  }, [members]); 
+  }, [members, loading]); 
 
   if (loading) {
     return <Loader />;
@@ -83,8 +84,8 @@ export default function UsersPage() {
               <div className="my-2 p-2">
                 <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName}` : 'Utilisateur'}</h4>
                 {user?.job && <span className="block text-sm italic text-white mb-3">{user?.job}</span>}
-                <Link href={`/profile/${user.idUser}`} className="text-sm text-purple-500 hover:text-purple-800">
-                  Voir profil
+                <Link href={`/profile/${user.idUser}`}  className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
+                <FaEye/>
                 </Link>
               </div>
             </li>
