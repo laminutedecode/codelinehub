@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useContextAuth } from "@/database/contexts/AuthContext";
 import { database } from "@/database/firebaseConfig";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, update } from "firebase/database";
 import Link from "next/link";
 import { FaEye } from "react-icons/fa";
 import { ChatType } from "@/database/types/types";
@@ -11,6 +11,7 @@ import { ChatType } from "@/database/types/types";
 export default function ChatsPage() {
   const { user } = useContextAuth();
   const [chats, setChats] = useState<ChatType[]>([]);
+  const [showArchived, setShowArchived] = useState<boolean>(false);
 
   useEffect(() => {
     const chatsRef = ref(database, "chats");
@@ -48,8 +49,9 @@ export default function ChatsPage() {
                 otherUserPhoto: otherUser.image,
                 updatedAt: chat.updatedAt,
                 createdAt: chat.createdAt || 0,
-                status: chat.status, // Ajout du statut ici
-                lastMessageSender: chat.lastMessageSender, // Ajouter l'expéditeur du dernier message
+                status: chat.status,
+                lastMessageSender: chat.lastMessageSender,
+                archived: chat.archived || false, // Ajout du champ archived
               };
             });
 
@@ -63,10 +65,45 @@ export default function ChatsPage() {
     }
   }, [user?.idUser]);
 
+  const toggleArchived = (chatId: string, shouldArchive: boolean) => {
+    const chatRef = ref(database, `chats/${chatId}`);
+    update(chatRef, {
+      archived: shouldArchive,
+    });
+  };
+
+
+  const filteredChats = showArchived
+    ? chats.filter((chat) => chat.archived)
+    : chats.filter((chat) => !chat.archived);
+
+  // Compteur total de messages non archivés
+  const totalMessagesCount = chats.filter((chat) => !chat.archived).length;
+
+  // Compteur de messages archivés
+  const archivedMessagesCount = chats.filter((chat) => chat.archived).length;
+
   return (
     <div className="text-white">
-      <h1 className="mb-2">Tous les Chats ({chats.length})</h1>
-      {chats.map((chat) => (
+      <div className="flex mb-4">
+        <button
+          onClick={() => setShowArchived(false)}
+          className={`mr-4 px-4 py-2 rounded text-sm ${
+            !showArchived ? "bg-purple-500" : "text-white"
+          }`}
+        >
+          Tous les Messages ({totalMessagesCount}) {/* Compteur pour Tous les Messages */}
+        </button>
+        <button
+          onClick={() => setShowArchived(true)}
+          className={`px-4 py-2 rounded text-sm ${
+            showArchived ? "bg-purple-500" : "text-white"
+          }`}
+        >
+          Messages Archivés ({archivedMessagesCount}) {/* Compteur pour Messages Archivés */}
+        </button>
+      </div>
+      {filteredChats.map((chat) => (
         <div
           key={chat.chatId}
           className="border p-4 rounded text-white flex items-center justify-between mb-4"
@@ -87,7 +124,6 @@ export default function ChatsPage() {
             </span>
           </div>
           <div className="flex items-center">
-            {/* Badge de notification si le dernier message n'est pas de l'utilisateur connecté */}
             {chat.lastMessageSender !== user.idUser && (
               <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full mr-2">
                 Nouveau message
@@ -95,10 +131,25 @@ export default function ChatsPage() {
             )}
             <Link
               href={`/dashboard/member/chats/${chat.chatId}`}
-              className="inline-flex justify-center items-center w-12 h-12 bg-green-500 hover:bg-green-800 px-3 py-1.5 text-white rounded-md"
+              className="ml-4 px-2 py-2 bg-purple-500 hover:bg-purple-800 text-white rounded"
             >
               <FaEye />
             </Link>
+            {!chat.archived ? (
+              <button
+                onClick={() => toggleArchived(chat.chatId, true)}
+                className="ml-4 px-2 py-1 bg-purple-500 hover:bg-purple-800 text-white rounded"
+              >
+                Archiver
+              </button>
+            ) : (
+              <button
+                onClick={() => toggleArchived(chat.chatId, false)}
+                className="ml-4 px-2 py-1 bg-purple-500 hover:bg-purple-800 text-white rounded"
+              >
+                Désarchiver
+              </button>
+            )}
           </div>
         </div>
       ))}

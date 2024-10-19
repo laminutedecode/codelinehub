@@ -29,7 +29,7 @@ export default function UsersPage() {
       }
     };
     fetchMembers(); 
-  }, [members, loading]); 
+  }, []); 
 
   if (loading) {
     return <Loader />;

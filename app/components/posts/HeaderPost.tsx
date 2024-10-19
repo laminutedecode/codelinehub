@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { PostSingleProps } from "@/database/types/types";
+import ButtonLikePost from "@/app/components/posts/ButtonLikePost";
 
 
-export default function HeaderPost({ userInfos, postData }: PostSingleProps) {  
+export default function HeaderPost({ userInfos, postData, id }: PostSingleProps) {  
+
+
   return (
     <div className="max-w-[1200px] mx-auto  h-full w-full">
 
@@ -20,7 +23,12 @@ export default function HeaderPost({ userInfos, postData }: PostSingleProps) {
           <p className="text-white text-sm">
             Publié par <Link className="text-purple-500" href={`/profile/${userInfos.idUser}`}>{userInfos.firstName} {userInfos.lastName}</Link>
           </p>
+
+          <div className="absolute top-6 right-6 flex items-center gap-2">
+            <ButtonLikePost idPost={id }/>
+          </div>
         </div> 
+
         
       </div>
     </div>

@@ -30,6 +30,10 @@ export interface UserTypeData {
   image?: string;
   background?: string;
   languages?: string[]; 
+  nbLikeProfile?: number;
+  usersLike?: string[];
+  nbFollowProfil?: number;
+  usersFollow?: string[];
 }
 
 export type PostTypeData = {
@@ -47,6 +51,7 @@ export type PostTypeData = {
 export interface PostSingleProps {
   userInfos: UserTypeData;  
   postData: PostTypeData;    
+  id:string;
 }
 
 export interface UserProfileProps {

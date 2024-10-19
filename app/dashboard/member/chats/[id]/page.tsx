@@ -30,24 +30,16 @@ export default function ChatPage() {
   useEffect(() => {
     if (id && user) {
       const chatRef = ref(database, `chats/${id}`);
-
-      // Écoute les données du chat
       const unsubscribe = onValue(chatRef, (snapshot) => {
         const chatData = snapshot.val();
 
         if (chatData) {
-          // Récupérer le dernier message
           const messages = chatData.messages || {};
-          const lastMessage = Object.values(messages).pop(); // Dernier message
+          const lastMessage = Object.values(messages).pop();
 
-          // Mettre à jour le statut en "Lu" lors de l'accès à la page
+    
           update(chatRef, { status: 'Lu' })
-            .then(() => {
-              console.log('Statut mis à jour en "Lu"');
-            })
-            .catch((error) => {
-              console.error('Erreur lors de la mise à jour du statut:', error);
-            });
+           
         }
       });
 

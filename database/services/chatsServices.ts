@@ -2,8 +2,6 @@ import { ref, onValue, off, serverTimestamp , get, set, update} from 'firebase/d
 import { database } from '@/database/firebaseConfig';
 import { MessageType,ChatType  } from '@/database/types/types';
 
-
-
 export const getUserChats = (userId: string, setChats: (chats: ChatType[]) => void) => {
   const chatsRef = ref(database, "chats");
 
@@ -118,7 +116,6 @@ export const sendMessage = async (id: string, userSendInfo: UserTypeData | null,
       });
   }
 
-  // Ajouter le message dans la conversation existante
   const messageRef = ref(database, `chats/${id}/messages/${Date.now()}`);
   await set(messageRef, messageData);
 };

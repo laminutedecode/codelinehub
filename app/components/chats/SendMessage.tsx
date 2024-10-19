@@ -30,7 +30,7 @@ export default function SendMessage({ id }: { id: string }) {
 
         if (value.trim() && user && recipientInfo) {
             await sendMessage(id, userSendInfo, recipientInfo, value);
-            setValue(""); // Réinitialiser le champ de saisie
+            setValue(""); 
         }
     };
 

@@ -7,6 +7,9 @@ import Link from "next/link";
 import { UserProfileProps } from "@/database/types/types";
 import { useContextAuth } from "@/database/contexts/AuthContext";
 import { IoChatbubbleEllipses } from "react-icons/io5";
+import ButtonFollow from "@/app/components/profile/ButtonFollow";
+import ButtonLike from "@/app/components/profile/ButtonLike";
+import MetaProfile from "./MetaProfile";
 
 
 export default function HeaderUserProfile({ userInfos,id }: UserProfileProps) {
@@ -40,19 +43,22 @@ export default function HeaderUserProfile({ userInfos,id }: UserProfileProps) {
             </h1>
           )}
           <p className="text-gray-300 font-bold">{userInfos.job}</p>
+          
+          <MetaProfile  idUserProfile={id}/>
 
-          {user && (
-            <Link
-              href={`/dashboard/member/chats/${[userInfos?.idUser, id].sort().join('-')}`}
-              className="absolute top-6 right-6 flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"
-            >
-              <IoChatbubbleEllipses />
-            </Link>
-          )}
+            {user && (
+              <div className="absolute top-6 right-6 flex items-center gap-2">
+                  <Link
+                    href={`/dashboard/member/chats/${[userInfos?.idUser, id].sort().join('-')}`}
+                    className="flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"
+                  >
+                    <IoChatbubbleEllipses />
+                  </Link>
+                <ButtonLike  idUserProfile={id}/>
+                <ButtonFollow idUserProfile={id}/>
+              </div>
+            )}
 
-   
-
-      
               <div className="absolute bottom-6 right-6">
                   <ul className="flex flex-col md:flex-row items-center gap-2">
                   {userReseaux.map((reseau) => (

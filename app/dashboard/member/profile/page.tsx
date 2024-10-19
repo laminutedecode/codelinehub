@@ -5,7 +5,7 @@ import { PostTypeData, UserTypeData } from "@/database/types/types";
 import { useContextAuth } from "@/database/contexts/AuthContext";
 import Loader from "@/app/components/Loader";
 import ProfileCard from "@/app/components/dashboard/CardProfile";
-import CountPost from "@/app/components/dashboard/CountPost";
+import CountDashboard from "@/app/components/dashboard/CountDashboard";
 
 export default function PageDashboard() {
   const { user } = useContextAuth();
@@ -63,7 +63,7 @@ export default function PageDashboard() {
   return (
     <div className="w-full p-8 text-white">
       <ProfileCard userInfos={userInfos} />
-      <CountPost postsCount={posts.length} />
+      <CountDashboard id={user?.idUser} postsCount={posts.length}/>
     </div>
   );
 }
