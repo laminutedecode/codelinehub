@@ -43,7 +43,7 @@ export default function ChatContainer({ id }: { id: string }) {
             <div>
               <p className="font-bold break-words">{msg.nameUserSend}:</p>
               <p className="break-all text-sm">{msg.text}</p>
-              <span className="text-xs text-gray-300">
+              <span className="text-xs text-gray-500">
                 {msg.createdAt ? new Date(msg.createdAt).toLocaleString() : 'Date non disponible'}
               </span>
               <br />
