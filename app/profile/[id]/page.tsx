@@ -57,7 +57,7 @@ export default function ProfileSinglePage() {
 
   return userInfos && (
     <>
-      <HeaderProfil userInfos={userInfos} /> 
+      <HeaderProfil userInfos={userInfos} id={id} /> 
       <UserInfosSection userInfos={userInfos} /> 
       <GridPostUser id={userInfos?.idUser as string} /> 
     </>

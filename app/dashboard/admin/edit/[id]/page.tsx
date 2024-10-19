@@ -3,19 +3,18 @@
 import ButtonBack from "@/app/components/ButtonBack";
 import Loader from "@/app/components/Loader";
 import { useContextAuth } from '@/database/contexts/AuthContext';
-import { jobsList } from "@/database/data/data";
-import { checkAdminRole } from "@/database/services/services";
+import { jobsList, languages } from "@/database/data/data";
 import { UpdateUserSchema } from "@/database/schemas/schemas";
+import { checkAdminRole } from "@/database/services/dbServices";
 import { UserTypeData } from "@/database/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getAuth } from 'firebase/auth';
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
-import { languages } from "@/database/data/data";
-import { getAuth } from 'firebase/auth';
 
 
 
