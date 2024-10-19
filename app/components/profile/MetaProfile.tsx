@@ -28,10 +28,10 @@ export default function MetaProfile({ idUserProfile }: { idUserProfile: string }
   return (
     <ul className="text-white flex items-center gap-2 mt-2">
       <li className="text-white text-sm flex items-center gap-2">
-        <FaHeart /> <span>{likes !== null ? likes : '0'}</span>
+        <FaHeart /> <span>{likes !== null ? likes : '0'} like{likes && likes > 0 && 's'}</span>
       </li>
       <li className="text-white text-sm flex items-center gap-2">
-        <HiMiniUserPlus /> <span>{followers !== null ? followers : '0'}</span>
+        <HiMiniUserPlus /> <span>{followers !== null ? followers : '0'} Follower{likes && likes > 0 && 's'}</span>
       </li>
     </ul>
   );
