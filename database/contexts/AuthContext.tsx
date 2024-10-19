@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider,
 import { useRouter } from 'next/navigation';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { AuthContextType, UserTypeData } from '../types/types';
+import { usePathname } from 'next/navigation';
 
 const GoogleProviderAuth = new GoogleAuthProvider();
 const GithubProviderAuth = new GithubAuthProvider();
@@ -102,14 +103,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  
-    useEffect(() => {
-    
-      if (user) {
-        router.push('/dashboard/member/profile');
-      } 
-      
-    }, [user]); 
+  const pathname = usePathname();
+  useEffect(() => {
+    // Redirection si l'utilisateur est connecté et sur la page de connexion
+    if (user && pathname === '/signInAndSignUp') {
+      router.push('/dashboard/member/profile');
+    }
+  }, [user, pathname, router]);
+
+  useEffect(() => {
+    // Vérification des pages protégées du tableau de bord
+    if (!user && pathname.startsWith('/dashboard/')) {
+      router.push('/signInAndSignUp'); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    }
+  }, [user, pathname, router]);
     
   
 

@@ -13,7 +13,7 @@ export default function ButtonsAuthProvider() {
       className="bg-gray-200 hover:bg-gray-300  text-gray-800 flex items-center gap-2 rounded-md  p-2"
     >
       <FaGoogle />
-      <span>Connexion via Google</span>
+      <span className="hidden md:block">Connexion via Google</span>
     </button>
     <button
       onClick={loginWithGithub}
@@ -21,7 +21,7 @@ export default function ButtonsAuthProvider() {
       className="bg-gray-200 hover:bg-gray-300  text-gray-800 flex items-center gap-2 rounded-md p-2"
     >
       <FaGithub />
-      <span>Connexion via GitHub</span>
+      <span className="hidden md:block">Connexion via GitHub</span>
     </button>
   </div>
   )

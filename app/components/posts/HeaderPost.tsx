@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { PostSingleProps } from "@/database/types/types";
 import ButtonLikePost from "@/app/components/posts/ButtonLikePost";
-
+import { useContextAuth } from "@/database/contexts/AuthContext";
 
 export default function HeaderPost({ userInfos, postData, id }: PostSingleProps) {  
 
+  const {user} = useContextAuth();
 
   return (
     <div className="max-w-[1200px] mx-auto  h-full w-full">
@@ -24,9 +25,13 @@ export default function HeaderPost({ userInfos, postData, id }: PostSingleProps)
             Publié par <Link className="text-purple-500" href={`/profile/${userInfos.idUser}`}>{userInfos.firstName} {userInfos.lastName}</Link>
           </p>
 
+          {user && (
+
           <div className="absolute top-6 right-6 flex items-center gap-2">
             <ButtonLikePost idPost={id as string }/>
           </div>
+
+            )}
         </div> 
 
         

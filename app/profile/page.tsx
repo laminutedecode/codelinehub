@@ -13,23 +13,25 @@ export default function UsersPage() {
   const [error, setError] = useState<string | null>(null); 
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const response = await fetch('/api/users/getUsersAll'); 
-        if (!response.ok) {
-          throw new Error('Erreur lors de la récupération des membres');
-        }
-        const data = await response.json();
-        setMembers(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false); 
+  const fetchMembers = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/users/getUsersAll');
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des membres');
       }
-    };
+      const data: UserTypeData[] = await response.json();
+      setMembers(data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false); 
+    }
+  };
+
+  useEffect(() => {
     fetchMembers(); 
-  }, []); 
+  }, []);
 
   if (loading) {
     return <Loader />;

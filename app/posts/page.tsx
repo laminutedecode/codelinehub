@@ -12,32 +12,31 @@ export default function PostsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAllPosts = async () => {
-      try {
-        const response = await fetch("/api/posts/getAllPosts", { 
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        
-        if (!response.ok) { 
-          throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-    
-        const postsAll: PostTypeData[] = await response.json();
-        setPosts(postsAll);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des posts", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
+  const fetchAllPosts = async () => {
+    try {
+      const response = await fetch("/api/posts/getAllPosts", { 
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
+      if (!response.ok) { 
+        throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+      }
+
+      const postsAll: PostTypeData[] = await response.json();
+      setPosts(postsAll);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des posts", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchAllPosts();
-  }, []);
+  }, []); 
 
  
   const filteredPosts = posts.filter((post) => {
