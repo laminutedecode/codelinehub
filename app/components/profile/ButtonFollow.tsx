@@ -24,7 +24,7 @@ export default function ButtonFollow({  idUserProfile }: { idUserProfile: string
 
       if (isFollowing) {
         newFollowCount -= 1; 
-        newUsersFollow = newUsersFollow.filter(userId => userId !== idUserCurrent); 
+        newUsersFollow = newUsersFollow.filter((userId: string) => userId !== idUserCurrent); 
       } else {
         newFollowCount += 1;
         newUsersFollow.push(idUserCurrent); 

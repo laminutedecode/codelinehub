@@ -10,7 +10,7 @@ export default function ButtonLikePost({ idPost }: { idPost: string }) {
   const [loading, setLoading] = useState(false);
 
   const handleLikeToggle = async () => {
-    const idUserCurrent = user?.idUser;
+    const idUserCurrent = user?.idUser as string;
 
     if (!idUserCurrent || !idPost) {
       return;
@@ -28,11 +28,11 @@ export default function ButtonLikePost({ idPost }: { idPost: string }) {
         let newLikeCountPost = userData.nbLikePost || 0;
         let newUsersLikePost = userData.usersLikePost || [];
 
-         const hasLiked = newUsersLikePost.includes(idUserCurrent);
+        const hasLiked = newUsersLikePost.includes(idUserCurrent);
 
         if (hasLiked) {
           newLikeCountPost -= 1;
-          newUsersLikePost = newUsersLikePost.filter(userId => userId !== idUserCurrent);
+          newUsersLikePost = newUsersLikePost.filter((userId: string) => userId !== idUserCurrent);
         } else {
           newLikeCountPost += 1;
           newUsersLikePost.push(idUserCurrent);
@@ -49,7 +49,7 @@ export default function ButtonLikePost({ idPost }: { idPost: string }) {
           let newUsersPostsListLike = userData.usersPostsListLike || [];
 
           if (hasLiked) {
-            newUsersPostsListLike = newUsersPostsListLike.filter(postId => postId !== idPost);
+            newUsersPostsListLike = newUsersPostsListLike.filter((postId: string) => postId !== idPost);
           } else {
             if (!newUsersPostsListLike.includes(idPost)) {
               newUsersPostsListLike.push(idPost);
@@ -68,7 +68,7 @@ export default function ButtonLikePost({ idPost }: { idPost: string }) {
     }
   };
 
-  const hasLiked = user?.usersLikePost?.includes(user?.idUser); 
+  const hasLiked = user?.usersLikePost?.includes(user?.idUser as string);
 
   return (
     <button 

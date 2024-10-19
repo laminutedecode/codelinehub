@@ -44,7 +44,7 @@ export default function HeaderUserProfile({ userInfos,id }: UserProfileProps) {
           )}
           <p className="text-gray-300 font-bold">{userInfos.job}</p>
           
-          <MetaProfile  idUserProfile={id}/>
+          <MetaProfile  idUserProfile={id as string }/>
 
             {user && (
               <div className="absolute top-6 right-6 flex items-center gap-2">
@@ -54,8 +54,8 @@ export default function HeaderUserProfile({ userInfos,id }: UserProfileProps) {
                   >
                     <IoChatbubbleEllipses />
                   </Link>
-                <ButtonLike  idUserProfile={id}/>
-                <ButtonFollow idUserProfile={id}/>
+                <ButtonLike  idUserProfile={id as string }/>
+                <ButtonFollow idUserProfile={id as string }/>
               </div>
             )}
 

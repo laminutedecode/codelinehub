@@ -1,6 +1,6 @@
 import { ref, onValue, off, serverTimestamp , get, set, update} from 'firebase/database';
 import { database } from '@/database/firebaseConfig';
-import { MessageType,ChatType  } from '@/database/types/types';
+import { MessageType,ChatType, UserTypeData  } from '@/database/types/types';
 
 export const getUserChats = (userId: string, setChats: (chats: ChatType[]) => void) => {
   const chatsRef = ref(database, "chats");
@@ -37,6 +37,10 @@ export const getUserChats = (userId: string, setChats: (chats: ChatType[]) => vo
             updatedAt: chat.updatedAt,
             createdAt: chat.createdAt || 0,
             status: chat.status,
+            lastMessageSender: chat.lastMessageSender || '', 
+            archived: chat.archived || false, 
+            nameUserSend: chat.nameUserSend || '', 
+            nameUserReciper: chat.nameUserReciper || '',
           };
         });
 

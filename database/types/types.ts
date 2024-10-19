@@ -34,6 +34,7 @@ export interface UserTypeData {
   usersLike?: string[];
   nbFollowProfil?: number;
   usersFollow?: string[];
+  usersLikePost?: string[];
 }
 
 export type PostTypeData = {
@@ -51,23 +52,27 @@ export type PostTypeData = {
 export interface PostSingleProps {
   userInfos: UserTypeData;  
   postData: PostTypeData;    
-  id:string;
+  id?:string;
 }
 
 export interface UserProfileProps {
+  id?: string;
   userInfos: UserTypeData;
 }
 
 export interface ChatType {
   chatId: string;
-  userSend: string;
-  nameUserSend: string;
-  nameUserReciper: string;
-  userReciper: string;
-  userReciperPhoto?: string;
-  userSendPhooto?: string;
-  createdAt?: number;
-  updatedAt?: number;
+  userSend: string; 
+  userReciper: string; 
+  otherUserName: string;
+  otherUserPhoto: string;
+  updatedAt: number; 
+  createdAt: number; 
+  status: string; 
+  lastMessageSender: string; 
+  archived: boolean; 
+  nameUserSend: string; 
+  nameUserReciper: string; 
 }
 
 export interface MessageType {

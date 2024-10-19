@@ -25,7 +25,7 @@ export default function HeaderPost({ userInfos, postData, id }: PostSingleProps)
           </p>
 
           <div className="absolute top-6 right-6 flex items-center gap-2">
-            <ButtonLikePost idPost={id }/>
+            <ButtonLikePost idPost={id as string }/>
           </div>
         </div> 
 

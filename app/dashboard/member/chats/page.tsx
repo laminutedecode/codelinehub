@@ -51,7 +51,9 @@ export default function ChatsPage() {
                 createdAt: chat.createdAt || 0,
                 status: chat.status,
                 lastMessageSender: chat.lastMessageSender,
-                archived: chat.archived || false, // Ajout du champ archived
+                archived: chat.archived || false,
+                nameUserSend: chat.nameUserSend || "",
+                nameUserReciper: chat.nameUserReciper || "", 
               };
             });
 
@@ -124,7 +126,7 @@ export default function ChatsPage() {
             </span>
           </div>
           <div className="flex items-center">
-            {chat.lastMessageSender !== user.idUser && (
+            {chat.lastMessageSender !== user?.idUser && (
               <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full mr-2">
                 Nouveau message
               </span>

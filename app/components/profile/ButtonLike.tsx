@@ -25,7 +25,7 @@ export default function ButtonLike({ idUserProfile }: {  idUserProfile: string }
 
       if (hasLiked) {
         newLikeCount -= 1; 
-        newUsersLike = newUsersLike.filter(userId => userId !== idUserCurrent);
+        newUsersLike = newUsersLike.filter((userId: string) => userId !== idUserCurrent);
       } else {
         newLikeCount += 1; 
         newUsersLike.push(idUserCurrent); 

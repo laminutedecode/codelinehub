@@ -63,7 +63,7 @@ export default function PageDashboard() {
   return (
     <div className="w-full p-8 text-white">
       <ProfileCard userInfos={userInfos} />
-      <CountDashboard id={user?.idUser} postsCount={posts.length}/>
+      <CountDashboard id={user?.idUser as string} postsCount={posts.length}/>
     </div>
   );
 }
