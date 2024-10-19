@@ -4,37 +4,42 @@ import Image from "next/image";
 import Link from "next/link";
 import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
-import { useContextAuth } from "@/database/contexts/AuthContext";
 import { FaEye } from "react-icons/fa";
 
 export default function GridPostUserProfil( {id }: {id: string}) {
 
-  const { user } = useContextAuth(); 
+
   const [posts, setPosts] = useState<PostTypeData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchUserPosts = async () => {
+    if (id) { 
+      setLoading(true); 
+      try {
+        const response = await fetch(`/api/posts/getPostByAuthor`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }), 
+        });
+
+        if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');
+        const userPosts = await response.json();
+        setPosts(userPosts);
+      } catch (error : any) {
+        console.error("Erreur lors de la récupération des posts de l'utilisateur:", error);
+        setError(error.message); 
+      } finally {
+        setLoading(false); 
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchUserPosts = async () => {
-      if (user?.idUser) { 
-        try {
-          const response = await fetch(`/api/posts/getPostByAuthor`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id }), 
-          });
-
-          if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');
-          const userPosts = await response.json();
-          setPosts(userPosts);
-        } catch (error) {
-          console.error("Erreur lors de la récupération des posts de l'utilisateur:", error);
-        }
-      }
-    };
-
-    fetchUserPosts();
-  }, [user, id]);
+    fetchUserPosts(); 
+  }, [id]); 
 
 
   return (
