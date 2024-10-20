@@ -70,6 +70,7 @@ export interface ChatType {
   createdAt: number; 
   status: string; 
   lastMessageSender: string; 
+
   archived: boolean; 
   nameUserSend: string; 
   nameUserReciper: string; 

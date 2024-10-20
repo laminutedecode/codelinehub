@@ -18,12 +18,8 @@ export default function PageDashboard() {
       if (user?.idUser) {
         setIsloading(true);
         try {
-          const postsResponse = await fetch(`/api/posts/getPostByAuthor`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: user.idUser }),
+          const postsResponse = await fetch(`/api/posts/getPostByAuthor?id=${user.idUser}`, {
+            method: "GET",
           });
 
           if (!postsResponse.ok)
@@ -31,12 +27,8 @@ export default function PageDashboard() {
           const userPosts = await postsResponse.json();
           setPosts(userPosts);
 
-          const userResponse = await fetch("/api/users/getUser", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: user.idUser }),
+          const userResponse = await fetch(`/api/users/getUser?id=${user.idUser}`, {
+            method: "GET",
           });
 
           if (!userResponse.ok)

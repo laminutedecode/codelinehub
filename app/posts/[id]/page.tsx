@@ -20,13 +20,9 @@ export default function PostSinglePage() {
       setLoading(true); 
       try {
         if (id) {
-          const response = await fetch(`/api/posts/getPostById`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id }) 
-          }); 
+          const response = await fetch(`/api/posts/getPostById?id=${id}`, {
+            method: 'GET', 
+          });
           
           if (!response.ok) {
             throw new Error('Post non trouvé.');
@@ -35,12 +31,9 @@ export default function PostSinglePage() {
           const fetchedDataPost = await response.json();
           setDataPost(fetchedDataPost);
   
-          const userResponse = await fetch(`/api/users/getUser`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: fetchedDataPost.authorId })
+      
+          const userResponse = await fetch(`/api/users/getUser?id=${fetchedDataPost.authorId}`, {
+            method: 'GET', 
           });
   
           if (!userResponse.ok) {
@@ -61,6 +54,7 @@ export default function PostSinglePage() {
   
     fetchData();
   }, [id]);
+  
   
 
   if (loading) { 

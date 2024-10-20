@@ -35,12 +35,8 @@ export default function EditPageUser() {
     const fetchUserData = async () => {
       try {
         if (user?.idUser) {
-          const response = await fetch('/api/users/getUser', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: user.idUser }), 
+          const response = await fetch(`/api/users/getUser?id=${user.idUser}`, {
+            method: 'GET',
           });
   
           if (!response.ok) {

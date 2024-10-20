@@ -7,7 +7,7 @@ export async function PUT(req: NextRequest) {
     const { idUser, currentUserId, ...updatedUserData } = await req.json();
     
     if (!currentUserId) {
-      return NextResponse.json({ error: 'Utilisateur non connecté.' }, { status: 403 });
+      return NextResponse.json({ error: 'Accès refusé. Vous devez être connecté.' }, { status: 403 });
     }
 
     if (!idUser) {

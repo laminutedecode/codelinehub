@@ -3,6 +3,7 @@ import { PostTypeData } from '@/types/types';
 import { collection, getDocs } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
 
+
 export async function GET() {
   try {
     const postsCollection = collection(db, 'posts');

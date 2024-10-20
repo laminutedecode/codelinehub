@@ -22,12 +22,8 @@ export default function ProfileSinglePage() {
 
       setLoading(true); 
       try {
-        const response = await fetch(`/api/users/getUser`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id }) 
+        const response = await fetch(`/api/users/getUser?id=${id}`, {
+          method: 'GET', 
         });
 
         if (!response.ok) {

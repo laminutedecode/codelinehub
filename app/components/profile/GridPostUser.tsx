@@ -17,12 +17,8 @@ export default function GridPostUserProfil( {id }: {id: string}) {
     if (id) { 
       setLoading(true); 
       try {
-        const response = await fetch(`/api/posts/getPostByAuthor`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id }), 
+        const response = await fetch(`/api/posts/getPostByAuthor?id=${id}`, {
+          method: "GET", 
         });
 
         if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');

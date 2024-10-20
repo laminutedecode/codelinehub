@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 
 export default function ButtonFollow({  idUserProfile }: { idUserProfile: string }) {
 
-  const { user } = useContextAuth(); // Récupération de l'utilisateur connecté
-  const idUserCurrent = user?.idUser; // Récupération de l'ID de l'utilisateur
+  const { user } = useContextAuth(); 
+  const idUserCurrent = user?.idUser;
 
 
   const handleFollowToggle = async () => {

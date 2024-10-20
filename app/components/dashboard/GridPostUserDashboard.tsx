@@ -21,14 +21,10 @@ export default function GridPostUserDashboard() {
       if (user?.idUser) { 
         setLoading(true); 
         try {
-          const response = await fetch(`/api/posts/getPostByAuthor`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: user.idUser }), 
+          const response = await fetch(`/api/posts/getPostByAuthor?id=${user.idUser}`, {
+            method: "GET", 
           });
-
+  
           if (!response.ok) throw new Error('Erreur lors de la récupération des posts.');
           const userPosts = await response.json();
           setPosts(userPosts);
@@ -39,9 +35,10 @@ export default function GridPostUserDashboard() {
         }
       }
     };
-
+  
     fetchUserPosts();
   }, [user]);
+  
 
   const handleDelete = async (postId: string) => {
     const confirmDelete = confirm("Êtes-vous sûr de vouloir supprimer ce post ?");

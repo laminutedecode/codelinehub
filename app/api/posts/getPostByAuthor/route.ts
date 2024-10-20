@@ -3,8 +3,13 @@ import { PostTypeData } from "@/types/types";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const { id } = await req.json(); 
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url); 
+  const id = searchParams.get("id"); 
+
+  if (!id) {
+    return NextResponse.json({ error: "ID de l'utilisateur manquant" }, { status: 400 });
+  }
 
   try {
     const postsCollection = collection(db, "posts"); 

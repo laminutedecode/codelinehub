@@ -62,12 +62,8 @@ export default function EditUserAdmin() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/users/getUser`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: id, currentUserId: idCurrentUser }), 
+        const response = await fetch(`/api/users/getUser?id=${id}`, {
+          method: 'GET',
         });
         if (!response.ok) {
           throw new Error('Erreur lors de la récupération des informations utilisateur.');

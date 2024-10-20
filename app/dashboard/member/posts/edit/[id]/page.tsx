@@ -32,12 +32,8 @@ export default function EditPost() {
     if (id) {
       const fetchPostData = async () => {
         try {
-          const response = await fetch(`/api/posts/getPostById`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id}), 
+          const response = await fetch(`/api/posts/getPostById?id=${id}`, {
+            method: 'GET',
           });
           if (!response.ok) throw new Error('Erreur lors de la récupération du post');
 
