@@ -1,14 +1,14 @@
 "use client";
 
-import { FaGithub, FaYoutube, FaInstagramSquare } from "react-icons/fa";
-import { CgWebsite } from "react-icons/cg";
-import Image from "next/image";
-import Link from "next/link";
-import { UserProfileProps } from "@/database/types/types";
-import { useContextAuth } from "@/database/contexts/AuthContext";
-import { IoChatbubbleEllipses } from "react-icons/io5";
 import ButtonFollow from "@/app/components/profile/ButtonFollow";
 import ButtonLike from "@/app/components/profile/ButtonLike";
+import { useContextAuth } from "@/contexts/AuthContext";
+import { UserProfileProps } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
+import { CgWebsite } from "react-icons/cg";
+import { FaGithub, FaInstagramSquare, FaYoutube } from "react-icons/fa";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 import MetaProfile from "./MetaProfile";
 
 

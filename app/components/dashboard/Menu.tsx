@@ -1,6 +1,6 @@
 'use client';
-import { useContextAuth } from "@/database/contexts/AuthContext";
-import { checkAdminRole } from "@/database/services/dbServices";
+import { useContextAuth } from "@/contexts/AuthContext";
+import { checkAdminRole } from "@/services/dbServices";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { HiMiniUserPlus } from "react-icons/hi2";
 import { db } from "@/database/firebaseConfig"; 
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { toast } from "react-toastify";
 
 export default function ButtonFollow({  idUserProfile }: { idUserProfile: string }) {

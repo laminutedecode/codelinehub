@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
-import { useContextAuth } from '@/database/contexts/AuthContext';
+import ButtonBack from "@/app/components/ButtonBack";
+import { languages } from "@/data/data";
+import { useContextAuth } from '@/contexts/AuthContext';
+import { PostsSchema } from "@/schemas/schemas";
+import { PostTypeData } from "@/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
-import { languages } from "@/database/data/data";
-import { PostsSchema } from "@/database/schemas/schemas";
-import { PostTypeData } from "@/database/types/types";
-import ButtonBack from "@/app/components/ButtonBack";
-import { useRouter } from "next/navigation";
 
 export default function CreatePost() {
   const router = useRouter();

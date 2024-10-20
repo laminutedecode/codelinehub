@@ -1,7 +1,7 @@
 "use client";
 
 import Menu from "@/app/components/dashboard/Menu";
-import { useContextAuth } from '@/database/contexts/AuthContext';
+import { useContextAuth } from '@/contexts/AuthContext';
 import Loader from "../components/Loader";
 
 export default function DashboardLayout({ children }: Readonly<{

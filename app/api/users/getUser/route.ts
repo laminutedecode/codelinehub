@@ -5,16 +5,16 @@ import { db } from '@/database/firebaseConfig';
 export async function POST(req: Request) {
   const { id } = await req.json();
   try {
-    const postDoc = doc(db, 'members', id);
-    const postSnapshot = await getDoc(postDoc);
+    const userDoc = doc(db, 'members', id);
+    const userSnapshot = await getDoc(userDoc);
 
-    if (postSnapshot.exists()) {
-      return NextResponse.json(postSnapshot.data());
+    if (userSnapshot.exists()) {
+      return NextResponse.json(userSnapshot.data());
     } else {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: 'Error fetching post' }, { status: 500 });
+    return NextResponse.json({ error: 'Error fetching users' }, { status: 500 });
   }
 }

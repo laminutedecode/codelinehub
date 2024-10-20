@@ -1,4 +1,4 @@
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 
 export default function ButtonsAuthProvider() {

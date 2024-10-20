@@ -1,9 +1,9 @@
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import { SignInSchema, SignUpSchema } from '@/database/schemas/schemas';
-import { SignInAndUpData } from '@/database/types/types';
-import { ChangeEvent,useState } from 'react';
-import * as Yup from 'yup';
 import ButtonsAuthProvider from '@/app/components/signInAndUp/ButtonsAuthProvider';
+import { useContextAuth } from '@/contexts/AuthContext';
+import { SignInSchema, SignUpSchema } from '@/schemas/schemas';
+import { SignInAndUpData } from '@/types/types';
+import { ChangeEvent, useState } from 'react';
+import * as Yup from 'yup';
 
 export default function SignInAndUpForm() {
 

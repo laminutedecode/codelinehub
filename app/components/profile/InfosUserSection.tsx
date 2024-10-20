@@ -1,4 +1,4 @@
-import { UserProfileProps } from "@/database/types/types";
+import { UserProfileProps } from "@/types/types";
 
 export default function InfosUser({ userInfos }: UserProfileProps) {
   return (

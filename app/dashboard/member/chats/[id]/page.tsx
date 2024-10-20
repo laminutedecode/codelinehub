@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import ChatContainer from '@/app/components/chats/ChatContainer';
 import SendMessage from '@/app/components/chats/SendMessage';
-import { useContextAuth } from '@/database/contexts/AuthContext';
+import { useContextAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { database } from '@/database/firebaseConfig';

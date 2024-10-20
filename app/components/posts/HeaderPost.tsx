@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { PostSingleProps } from "@/database/types/types";
 import ButtonLikePost from "@/app/components/posts/ButtonLikePost";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
+import { PostSingleProps } from "@/types/types";
+import Link from "next/link";
 
 export default function HeaderPost({ userInfos, postData, id }: PostSingleProps) {  
 

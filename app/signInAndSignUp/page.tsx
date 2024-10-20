@@ -1,5 +1,5 @@
 "use client";
-import { useContextAuth } from '@/database/contexts/AuthContext';
+import { useContextAuth } from '@/contexts/AuthContext';
 import Loader from '../components/Loader';
 import SignInAndUpForm from '../components/signInAndUp/SignInAndUpForm';
 import { useEffect } from 'react';

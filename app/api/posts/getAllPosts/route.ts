@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/database/firebaseConfig';
-import { PostTypeData } from '@/database/types/types';
+import { PostTypeData } from '@/types/types';
+import { collection, getDocs } from 'firebase/firestore';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {

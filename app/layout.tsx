@@ -1,5 +1,5 @@
 import Nav from "@/app/components/Nav";
-import { AuthProvider } from "@/database/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ToastContainer } from 'react-toastify';

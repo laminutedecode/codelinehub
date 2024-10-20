@@ -1,10 +1,10 @@
 "use client";
 
+import Loader from "@/app/components/Loader";
+import { UserTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import Loader from "@/app/components/Loader";
-import { UserTypeData } from "@/database/types/types";
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 
 export default function UsersPage() {

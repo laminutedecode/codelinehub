@@ -1,6 +1,33 @@
-import { ref, onValue, off, serverTimestamp , get, set, update} from 'firebase/database';
 import { database } from '@/database/firebaseConfig';
-import { MessageType,ChatType, UserTypeData  } from '@/database/types/types';
+import { ChatType, MessageType, UserTypeData } from '@/types/types';
+import { get, onValue, ref, serverTimestamp, set, update } from 'firebase/database';
+import { doc, getDoc } from 'firebase/firestore'; 
+import { db } from '@/database/firebaseConfig'; 
+
+export const fetchRecipientInfo = async (recipientId: string): Promise<UserTypeData | null> => {
+    const recipientDocRef = doc(db, 'members', recipientId.split('-')[1]); // Récupère l'ID du destinataire
+    const recipientDoc = await getDoc(recipientDocRef);
+    
+    if (recipientDoc.exists()) {
+        return recipientDoc.data() as UserTypeData;
+    } else {
+        console.error("Aucun utilisateur trouvé pour cet ID");
+        return null;
+    }
+};
+
+export const fetchUserSendInfo = async (userId: string): Promise<UserTypeData | null> => {
+    const userSendDocRef = doc(db, 'members', userId);
+    const userSendDoc = await getDoc(userSendDocRef);
+    
+    if (userSendDoc.exists()) {
+        return userSendDoc.data() as UserTypeData;
+    } else {
+        console.error("Aucun utilisateur trouvé pour cet ID");
+        return null;
+    }
+};
+
 
 export const getUserChats = (userId: string, setChats: (chats: ChatType[]) => void) => {
   const chatsRef = ref(database, "chats");
@@ -74,52 +101,50 @@ export const getMessagesByChat = (chatId: string, setMessages: (messages: Messag
 
 
 
-
 export const sendMessage = async (id: string, userSendInfo: UserTypeData | null, recipientInfo: UserTypeData | null, messageText: string) => {
-  if (!userSendInfo || !recipientInfo) {
-      throw new Error("User information is missing.");
+  if (!id || !userSendInfo || !recipientInfo || !messageText) {
+    throw new Error("Missing required information.");
   }
 
   const messageData = {
-      text: messageText,
-      nameUserSend: `${userSendInfo.firstName} ${userSendInfo.lastName}` || userSendInfo.email,
-      nameUserReciper: `${recipientInfo.firstName} ${recipientInfo.lastName}` || recipientInfo.email,
-      idUserSend: userSendInfo.idUser,
-      idUserReciper: recipientInfo.idUser,
-      imageUserSend: userSendInfo.image || '/images/default-avatar.png',
-      imageUserReciper: recipientInfo.image || '/images/default-avatar.png',
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+    text: messageText,
+    nameUserSend: `${userSendInfo.firstName} ${userSendInfo.lastName}` || userSendInfo.email,
+    nameUserReciper: `${recipientInfo.firstName} ${recipientInfo.lastName}` || recipientInfo.email,
+    idUserSend: userSendInfo.idUser,
+    idUserReciper: recipientInfo.idUser,
+    imageUserSend: userSendInfo.image || '/images/default-avatar.png',
+    imageUserReciper: recipientInfo.image || '/images/default-avatar.png',
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   };
 
   const chatData = {
-      idUserSend: userSendInfo.idUser,
-      idUserReciper: recipientInfo.idUser,
-      nameUserSend: `${userSendInfo.firstName} ${userSendInfo.lastName}` || userSendInfo.email,
-      nameUserReciper: `${recipientInfo.firstName} ${recipientInfo.lastName}` || recipientInfo.email,
-      imageUserSend: userSendInfo.image || '/images/default-avatar.png',
-      imageUserReciper: recipientInfo.image || '/images/default-avatar.png',
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-      status: "Nouveau", 
-      lastMessageSender: userSendInfo.idUser 
+    idUserSend: userSendInfo.idUser,
+    idUserReciper: recipientInfo.idUser,
+    nameUserSend: `${userSendInfo.firstName} ${userSendInfo.lastName}` || userSendInfo.email,
+    nameUserReciper: `${recipientInfo.firstName} ${recipientInfo.lastName}` || recipientInfo.email,
+    imageUserSend: userSendInfo.image || '/images/default-avatar.png',
+    imageUserReciper: recipientInfo.image || '/images/default-avatar.png',
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    status: "Nouveau",
+    lastMessageSender: userSendInfo.idUser,
   };
 
-
   const chatRef = ref(database, `chats/${id}`);
-
   const chatSnapshot = await get(chatRef);
 
+  // Création ou mise à jour du chat
   if (!chatSnapshot.exists()) {
-      await set(chatRef, chatData);
+    await set(chatRef, chatData);
   } else {
-    
-      await update(chatRef, { 
-          updatedAt: serverTimestamp(),
-          lastMessageSender: userSendInfo.idUser 
-      });
+    await update(chatRef, {
+      updatedAt: serverTimestamp(),
+      lastMessageSender: userSendInfo.idUser,
+    });
   }
 
+  // Enregistrement du message
   const messageRef = ref(database, `chats/${id}/messages/${Date.now()}`);
   await set(messageRef, messageData);
 };

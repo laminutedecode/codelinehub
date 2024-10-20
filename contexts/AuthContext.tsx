@@ -1,12 +1,11 @@
 "use client";
 
 import { auth } from '@/database/firebaseConfig';
-import { addUserToMemberCollection } from '@/database/services/dbServices';
+import { addUserToMemberCollection } from '@/services/dbServices';
+import { AuthContextType, UserTypeData } from '@/types/types';
 import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, User } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AuthContextType, UserTypeData } from '../types/types';
-import { usePathname } from 'next/navigation';
 
 const GoogleProviderAuth = new GoogleAuthProvider();
 const GithubProviderAuth = new GithubAuthProvider();

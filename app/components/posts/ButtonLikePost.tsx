@@ -2,7 +2,7 @@ import { db } from "@/database/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { toast } from "react-toastify";
 
 export default function ButtonLikePost({ idPost }: { idPost: string }) {

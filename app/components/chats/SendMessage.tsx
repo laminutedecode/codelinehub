@@ -1,9 +1,8 @@
+import { useContextAuth } from '@/contexts/AuthContext';
+import { fetchRecipientInfo, fetchUserSendInfo, sendMessage } from '@/services/chatsServices';
+import { UserTypeData } from "@/types/types";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import { fetchRecipientInfo, fetchUserSendInfo } from '@/database/services/usersServices'; 
-import { sendMessage } from '@/database/services/chatsServices';
-import { UserTypeData } from "@/database/types/types";
 
 export default function SendMessage({ id }: { id: string }) {
     const { user } = useContextAuth();

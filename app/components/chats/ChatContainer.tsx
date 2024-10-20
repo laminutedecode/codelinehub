@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useContextAuth } from '@/contexts/AuthContext';
+import { getMessagesByChat } from '@/services/chatsServices';
+import { MessageType } from '@/types/types';
 import Image from 'next/image';
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import { getMessagesByChat } from '@/database/services/chatsServices';
-import { MessageType } from '@/database/types/types';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ChatContainer({ id }: { id: string }) {
   const { user } = useContextAuth();

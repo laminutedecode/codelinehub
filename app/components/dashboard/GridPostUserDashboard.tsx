@@ -1,15 +1,15 @@
 "use client";
 
+import Loader from "@/app/components/Loader";
+import { useContextAuth } from "@/database/contexts/AuthContext";
+import { PostTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
-import { useContextAuth } from "@/database/contexts/AuthContext";
 import { BiTrash } from "react-icons/bi";
 import { FaEye } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 import { toast } from "react-toastify";
-import Loader from "@/app/components/Loader"; 
 
 export default function GridPostUserDashboard() {
   const { user } = useContextAuth(); 

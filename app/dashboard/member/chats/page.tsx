@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { database } from "@/database/firebaseConfig";
-import { ref, onValue, update } from "firebase/database";
+import { ChatType } from "@/types/types";
+import { onValue, ref, update } from "firebase/database";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
-import { ChatType } from "@/database/types/types";
 
 export default function ChatsPage() {
   const { user } = useContextAuth();

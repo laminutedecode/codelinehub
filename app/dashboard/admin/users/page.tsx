@@ -1,13 +1,13 @@
 "use client"
 
 import Loader from "@/app/components/Loader";
-import { UserTypeData } from "@/database/types/types";
+import { UserTypeData } from "@/types/types";
+import { getAuth } from 'firebase/auth';
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { toast } from "react-toastify";
-import { getAuth } from 'firebase/auth';
 
 const UsersList = () => {
 

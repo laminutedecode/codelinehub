@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { PostTypeData, UserTypeData } from "@/database/types/types";
-import { useContextAuth } from "@/database/contexts/AuthContext";
 import Loader from "@/app/components/Loader";
 import ProfileCard from "@/app/components/dashboard/CardProfile";
 import CountDashboard from "@/app/components/dashboard/CountDashboard";
+import { useContextAuth } from "@/contexts/AuthContext";
+import { PostTypeData, UserTypeData } from "@/types/types";
+import { useEffect, useState } from "react";
 
 export default function PageDashboard() {
   const { user } = useContextAuth();

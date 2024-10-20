@@ -1,7 +1,7 @@
+import { db } from "@/database/firebaseConfig";
+import { PostTypeData } from "@/types/types";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "@/database/firebaseConfig"; 
-import { PostTypeData } from "@/database/types/types"; 
 
 export async function POST(req: NextRequest) {
   const { id } = await req.json(); 

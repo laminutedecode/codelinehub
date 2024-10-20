@@ -1,12 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { UserTypeData } from "@/database/types/types";
 import Loader from "@/app/components/Loader";
+import GridPostUser from "@/app/components/profile/GridPostUser";
 import HeaderProfil from "@/app/components/profile/HeaderProfil";
 import UserInfosSection from "@/app/components/profile/InfosUserSection";
-import GridPostUser from "@/app/components/profile/GridPostUser";
+import { UserTypeData } from "@/types/types";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 
 export default function ProfileSinglePage() {

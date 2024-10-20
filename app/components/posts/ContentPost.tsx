@@ -1,6 +1,6 @@
+import { formatDate } from "@/utils/formatDate";
+import { PostSingleProps } from "@/types/types";
 import Link from "next/link";
-import { formatDate } from "@/database/utils/formatDate";
-import { PostSingleProps } from "@/database/types/types";
 import { GrUpdate } from "react-icons/gr";
 
 export default function ContentPostSingle({ userInfos, postData }: PostSingleProps) {

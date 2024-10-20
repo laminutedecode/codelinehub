@@ -1,8 +1,8 @@
 "use client";
 
+import { PostTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 

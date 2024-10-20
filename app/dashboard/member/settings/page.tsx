@@ -1,18 +1,16 @@
 "use client";
 
 import Loader from "@/app/components/Loader";
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import { jobsList } from "@/database/data/data";
-import { UpdateUserSchema } from "@/database/schemas/schemas";
-import { UserTypeData } from "@/database/types/types";
-import { formatDate } from "@/database/utils/formatDate";
+import { jobsList, languages } from "@/data/data";
+import { useContextAuth } from '@/contexts/AuthContext';
+import { UpdateUserSchema } from "@/schemas/schemas";
+import { UserTypeData } from "@/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
-import { languages } from "@/database/data/data";
 
 
 

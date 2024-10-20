@@ -1,4 +1,4 @@
-import { UserTypeData } from "@/database/types/types";
+import { UserTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -2,11 +2,11 @@
 
 import ButtonBack from "@/app/components/ButtonBack";
 import Loader from "@/app/components/Loader";
-import { useContextAuth } from '@/database/contexts/AuthContext';
-import { jobsList, languages } from "@/database/data/data";
-import { UpdateUserSchema } from "@/database/schemas/schemas";
-import { checkAdminRole } from "@/database/services/dbServices";
-import { UserTypeData } from "@/database/types/types";
+import { useContextAuth } from '@/contexts/AuthContext';
+import { jobsList, languages } from "@/data/data";
+import { UpdateUserSchema } from "@/schemas/schemas";
+import { checkAdminRole } from "@/services/dbServices";
+import { UserTypeData } from "@/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getAuth } from 'firebase/auth';
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";

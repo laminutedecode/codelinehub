@@ -1,11 +1,11 @@
 "use client";
 
+import Loader from "@/app/components/Loader";
+import { PostTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { PostTypeData } from "@/database/types/types";
 import { useEffect, useState } from "react";
-import Loader from "@/app/components/Loader";
-import { FaEye,FaUser } from "react-icons/fa";
+import { FaEye, FaUser } from "react-icons/fa";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState<PostTypeData[]>([]);

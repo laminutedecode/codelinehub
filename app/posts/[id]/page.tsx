@@ -1,11 +1,11 @@
 "use client"
 
+import Loader from "@/app/components/Loader";
+import ContentPost from "@/app/components/posts/ContentPost";
+import HeaderPost from "@/app/components/posts/HeaderPost";
+import { PostTypeData, UserTypeData } from "@/types/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UserTypeData, PostTypeData } from "@/database/types/types";
-import Loader from "@/app/components/Loader";
-import HeaderPost from "@/app/components/posts/HeaderPost";
-import ContentPost from "@/app/components/posts/ContentPost";
 
 export default function PostSinglePage() {
   const { id } = useParams(); 

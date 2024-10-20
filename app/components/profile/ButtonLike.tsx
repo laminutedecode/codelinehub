@@ -1,7 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { db } from "@/database/firebaseConfig"; 
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { toast } from "react-toastify";
 
 export default function ButtonLike({ idUserProfile }: {  idUserProfile: string }) {
