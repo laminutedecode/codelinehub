@@ -86,7 +86,7 @@ export default function UsersPage() {
               <div className="my-2 p-2">
                 <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName}` : 'Utilisateur'}</h4>
                 {user?.job && <span className="block text-sm italic text-white mb-3">{user?.job}</span>}
-                <Link href={`/profile/${user.idUser}`}  className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
+                <Link href={`/members/${user.idUser}`}  className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
                 <FaEye/>
                 </Link>
               </div>

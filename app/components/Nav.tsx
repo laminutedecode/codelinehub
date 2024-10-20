@@ -8,7 +8,7 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <Link href="/" className="hover:text-purple-500">Home</Link>
           <Link href="/posts" className="hover:text-purple-500">Posts</Link>
-          <Link href="/profile" className="hover:text-purple-500">Développeurs</Link>
+          <Link href="/members" className="hover:text-purple-500">Membres</Link>
 
         </div>
         <div>

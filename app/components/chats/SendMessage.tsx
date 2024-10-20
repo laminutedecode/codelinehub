@@ -34,7 +34,7 @@ export default function SendMessage({ id }: { id: string }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-purple-900 fixed left-0 bottom-0 w-full py-10 flex items-center justify-center px-3 flex-col">
+        <form onSubmit={handleSubmit} className="bg-[#1a1a1a] fixed left-0 bottom-0 w-full py-10 flex items-center justify-center px-3 flex-col">
             <div className="w-full flex items-center justify-center px-3">
                 <input
                     value={value}
@@ -43,7 +43,7 @@ export default function SendMessage({ id }: { id: string }) {
                     type="text"
                     className="p-3 w-full outline-none border-none rounded-l-md"
                 />
-                <button type="submit" className="bg-green-500 hover:bg-green-600 text-white p-3 flex items-center gap-2 border-none rounded-r-md">
+                <button type="submit" className="bg-purple-500 hover:bg-purple-600 text-white p-3 flex items-center gap-2 border-none rounded-r-md">
                     <IoSend />
                     <span>Envoyer</span>
                 </button>

@@ -88,7 +88,7 @@ export default function PostsPage() {
                   <Link title={`Lire article ${post?.title}`} href={`/posts/${post.id}`} className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
                     <FaEye/>
                   </Link>
-                  <Link title="Voir profil de l'auteur" href={`/profile/${post.authorId}`} className="inline-flex items-center gap-2 bg-orange-800 hover:bg-orange-500 px-3 py-1.5 text-white rounded-md text-sm">
+                  <Link title="Voir profil de l'auteur" href={`/members/${post.authorId}`} className="inline-flex items-center gap-2 bg-orange-800 hover:bg-orange-500 px-3 py-1.5 text-white rounded-md text-sm">
                     <FaUser/>
                   </Link>
                 </div>
