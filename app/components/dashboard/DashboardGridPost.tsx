@@ -11,7 +11,7 @@ import { FaEye } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 import { toast } from "react-toastify";
 
-export default function GridPostUserDashboard() {
+export default function DashboardGridPost() {
   const { user } = useContextAuth(); 
   const [posts, setPosts] = useState<PostTypeData[]>([]);
   const [loading, setLoading] = useState<boolean>(true); 

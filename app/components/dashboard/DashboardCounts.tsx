@@ -11,7 +11,7 @@ import { MdArticle } from "react-icons/md";
 
 
 
-export default function CountDashboard({ id, postsCount }: CountDashboardProps) {
+export default function DashboardCounts({ id, postsCount }: CountDashboardProps) {
   const [likesCount, setLikesCount] = useState<number>(0);
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [chatsCount, setChatsCount] = useState<number>(0);

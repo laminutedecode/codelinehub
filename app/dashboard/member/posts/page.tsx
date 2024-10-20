@@ -1,6 +1,6 @@
 "use client";
 import { CiCirclePlus } from "react-icons/ci";
-import GridPostUserDashboard from "@/app/components/dashboard/GridPostUserDashboard";
+import DashboardGridPost from "@/app/components/dashboard/DashboardGridPost";
 import Link from 'next/link';
 
 
@@ -14,7 +14,7 @@ export default function PostsUserDashboard() {
         <span>Créer un post</span>
      </Link>
     
-      <GridPostUserDashboard  />
+      <DashboardGridPost  />
     </>
   );
 }

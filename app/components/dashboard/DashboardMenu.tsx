@@ -9,9 +9,6 @@ import { IoIosChatbubbles, IoIosSettings } from "react-icons/io";
 import { MdArticle } from "react-icons/md";
 import ButtonSignOut from "./ButtonSignOut";
 
-
-
-
 export default function DashboardMenu() {
   const pathname = usePathname();
   const { user } = useContextAuth();

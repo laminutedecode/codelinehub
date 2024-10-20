@@ -1,11 +1,12 @@
 "use client";
 
-import Loader from "@/app/components/Loader";
-import ProfileCard from "@/app/components/dashboard/CardProfile";
-import CountDashboard from "@/app/components/dashboard/CountDashboard";
 import { useContextAuth } from "@/contexts/AuthContext";
 import { PostTypeData, UserTypeData } from "@/types/types";
 import { useEffect, useState } from "react";
+
+import Loader from "@/app/components/Loader";
+import DashboardCardProfile from "@/app/components/dashboard/DashboardCardProfile";
+import DashboardCounts from "@/app/components/dashboard/DashboardCounts";
 
 export default function PageDashboard() {
   const { user } = useContextAuth();
@@ -54,8 +55,8 @@ export default function PageDashboard() {
 
   return (
     <div className="w-full p-8 text-white">
-      <ProfileCard userInfos={userInfos} />
-      <CountDashboard id={user?.idUser as string} postsCount={posts.length}/>
+      <DashboardCardProfile userInfos={userInfos} />
+      <DashboardCounts id={user?.idUser as string} postsCount={posts.length}/>
     </div>
   );
 }

@@ -6,7 +6,7 @@ interface ProfileCardProps {
   userInfos: UserTypeData | null;
 }
 
-export default function ProfileCard({ userInfos }: ProfileCardProps) {
+export default function DashboardCardProfile({ userInfos }: ProfileCardProps) {
   return (
     <div
       className="relative w-full border p-4 rounded-md flex items-center justify-between bg-center bg-cover md:border-l md:border-r border-b overflow-hidden"

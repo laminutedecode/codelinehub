@@ -1,6 +1,6 @@
 "use client";
 
-import Menu from "@/app/components/dashboard/Menu";
+import DashboardMenu from "@/app/components/dashboard/DashboardMenu";
 import { useContextAuth } from '@/contexts/AuthContext';
 import Loader from "../components/Loader";
 
@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: Readonly<{
 
   return (
     <section className="md:flex items-stretch gap-4 min-h-screen w-full">
-      <Menu />
+      <DashboardMenu />
       <div className="w-full h-full px-8 py-6">
         {children}
       </div>
