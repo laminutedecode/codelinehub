@@ -22,7 +22,7 @@ export default function HeaderPost({ userInfos, postData, id }: PostSingleProps)
             {postData.title}  
           </h1>
           <p className="text-white text-sm">
-            Publié par <Link className="text-purple-500" href={`/profile/${userInfos.idUser}`}>{userInfos.firstName} {userInfos.lastName}</Link>
+            Publié par <Link className="text-purple-500" href={`/members/${userInfos.idUser}`}>{userInfos.firstName} {userInfos.lastName}</Link>
           </p>
 
           {user && (
