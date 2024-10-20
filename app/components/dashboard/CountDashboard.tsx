@@ -2,16 +2,14 @@ import { useEffect, useState } from "react";
 import { db, database } from "@/database/firebaseConfig"; 
 import { doc, getDoc } from "firebase/firestore";
 import { ref, onValue } from "firebase/database";
+import {CountDashboardProps} from "@/types/types";
+
 import { FaHeart } from "react-icons/fa";
 import { HiMiniUserPlus } from "react-icons/hi2";
 import { MdChat } from "react-icons/md";
 import { MdArticle } from "react-icons/md";
 
 
-interface CountDashboardProps {
-  id: string;
-  postsCount: number;
-}
 
 export default function CountDashboard({ id, postsCount }: CountDashboardProps) {
   const [likesCount, setLikesCount] = useState<number>(0);

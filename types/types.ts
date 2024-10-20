@@ -60,6 +60,11 @@ export interface UserProfileProps {
   userInfos: UserTypeData;
 }
 
+export interface CountDashboardProps {
+  id: string;
+  postsCount: number;
+}
+
 export interface ChatType {
   chatId: string;
   userSend: string; 

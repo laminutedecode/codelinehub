@@ -1,9 +1,8 @@
 "use client";
 
 import Loader from "@/app/components/Loader";
-import GridPostUser from "@/app/components/profile/GridPostUser";
-import HeaderProfil from "@/app/components/profile/HeaderProfil";
-import UserInfosSection from "@/app/components/profile/InfosUserSection";
+import MemberHeader from "@/app/components/members/MemberHeader";
+import MemberContent from "@/app/components/members/MemberContent";
 import { UserTypeData } from "@/types/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -42,20 +41,12 @@ export default function ProfileSinglePage() {
     fetchUserData();
   }, [id]); 
 
-  if (loading) { return <Loader />; }
-  if (error) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <h2 className="uppercase font-black text-2xl text-center">{error}</h2>
-      </div>
-    );
-  }
+  if (loading || error) { return <Loader />; }
 
   return userInfos && (
-    <>
-      <HeaderProfil userInfos={userInfos} id={id as string} /> 
-      <UserInfosSection userInfos={userInfos} /> 
-      <GridPostUser id={userInfos?.idUser as string} /> 
-    </>
+    <section className="max-w-[1200px] mx-auto md:border-l md:border-r">
+      <MemberHeader userInfos={userInfos} id={id as string} /> 
+      <MemberContent userInfos={userInfos} /> 
+    </section>
   );
 }
