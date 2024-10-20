@@ -50,7 +50,7 @@ export default function HeaderUserProfile({ userInfos,id }: UserProfileProps) {
             {user && (
               <div className="absolute top-6 right-6 flex items-center gap-2">
                   <Link
-                      href={`/dashboard/member/chats/${[user.idUser, id].sort().join('-')}`}
+                      href={`/dashboard/member/chats/${[id, user.idUser].sort().join('-')}`}
                     className="flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"
                   >
                     <IoChatbubbleEllipses />
