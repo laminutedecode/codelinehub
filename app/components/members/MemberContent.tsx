@@ -11,13 +11,13 @@ export default function MemberContent({ userInfos }: UserProfileProps) {
         </div>
 
         <div className="w-full  lg:w-[500px] lg:border-l px-4">
-          <h3 className="text-lg font-bold text-white border-b border-purple-500 pb-2 mb-2">Langages et outils: </h3>
-            <ul className="flex items-center gap-4 flex-wrap mt-4">
+          <h3 className="text-lg font-bold text-white border-b border-purple-500 pb-2 mb-2">Domaines: </h3>
+            <ul className="flex items-center gap-4 flex-wrap mt-4 flex-row lg:flex-col">
               {userInfos?.languages?.length ? (
                 userInfos.languages.map((language) => (
                   <li
                     key={language}
-                    className="bg-purple-200 text-purple-500 p-2 rounded-md text-[11px]"
+                    className="block lg:w-full bg-purple-200 text-purple-500 p-2 rounded-md text-[11px] text-center"
                   >
                     {language}
                   </li>

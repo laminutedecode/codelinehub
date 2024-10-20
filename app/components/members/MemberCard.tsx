@@ -13,7 +13,7 @@ export default function MemberCard({userInfos}: UserProfileProps) {
           alt={userInfos?.firstName as string}
           width={500}
           height={500}
-          className="w-hull h-full object-cover"
+          className="w-hull h-full object-cover rounded-full"
           />
       </div>
       {userInfos.firstName && userInfos.lastName &&

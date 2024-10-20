@@ -310,7 +310,7 @@ export default function EditUserAdmin() {
     </div>
    
     <div className="mb-4 flex flex-col space-y-2">
-      <label   className="text-gray-300">Langages:</label>
+      <label   className="text-gray-300">Domaines:</label>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2">
         {languages.map((language) => (
           <div key={language.value} className="flex items-center">
