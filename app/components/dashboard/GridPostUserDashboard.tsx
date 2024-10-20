@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "@/app/components/Loader";
-import { useContextAuth } from "@/database/contexts/AuthContext";
+import { useContextAuth } from "@/contexts/AuthContext";
 import { PostTypeData } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
