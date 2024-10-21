@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaEye, FaUser } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 export default function PostsPage() {
   const [posts, setPosts] = useState<PostTypeData[]>([]);
@@ -83,7 +84,11 @@ export default function PostsPage() {
                 />
               )}
               <div className="my-2 p-2">
-                <h2 className="text-md font-bold text-white line-clamp-2 mb-2">{post.title}</h2>
+                <h2 className="text-md font-bold text-white line-clamp-2 ">{post.title}</h2>
+                <p className="mb-2 italic text-white text-sm flex items-center gap-1">
+                  <FaHeart />
+                  <span>{post?.usersLikePost?.length} likes</span>
+                </p>
                 <div className="flex items-center justify-end gap-2">
                   <Link title={`Lire article ${post?.title}`} href={`/posts/${post.id}`} className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
                     <FaEye/>

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { HiMiniUserPlus } from "react-icons/hi2";
 
 export default function UsersPage() {
   const [members, setMembers] = useState<UserTypeData[]>([]);
@@ -84,8 +86,20 @@ export default function UsersPage() {
                 />
               </div>
               <div className="my-2 p-2">
-                <h4 className="text-md font-bold text-white line-clamp-2 mb-2">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName}` : 'Utilisateur'}</h4>
-                {user?.job && <span className="block text-sm italic text-white mb-3">{user?.job}</span>}
+                <h4 className="text-md font-bold text-white line-clamp-2 mb-1">{user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName}` : 'Utilisateur'}</h4>
+                {user?.job && <span className="block text-sm italic text-white mb-1">{user?.job}</span>}
+                {user?.nbFollowProfil && user?.nbLikeProfile &&
+                  <div className="flex items-center justify-center gap-2 text-white mb-3 text-sm italic flex-col">
+                    <p className="flex items-center gap-1">
+                        <HiMiniUserPlus />
+                        <span>{user?.nbFollowProfil} follower{user?.nbLikeProfile > 1 && "s"}</span>
+                    </p>
+                    <p className="flex items-center gap-1 ">
+                      <FaHeart/>
+                      <span>{user?.nbLikeProfile} like{user?.nbLikeProfile > 1 && "s"}</span>
+                    </p>
+                  </div>
+                }
                 <Link href={`/members/${user.idUser}`}  className="inline-flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white rounded-md text-sm">
                 <FaEye/>
                 </Link>

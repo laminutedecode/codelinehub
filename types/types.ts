@@ -47,6 +47,7 @@ export type PostTypeData = {
   authorId?: string ; 
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  usersLikePost?: string[];
 };
 
 export interface PostSingleProps {

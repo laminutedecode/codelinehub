@@ -22,20 +22,19 @@ export default function MemberHeader({ userInfos,id }: UserProfileProps) {
 
         <div className="relative text-left p-6 w-full h-full">
          
-          <div className="absolute top-6 right-6 flex items-center gap-2">
-            <Link
-                href={`/dashboard/member/chats/${[id, user?.idUser].sort().join('-')}`}
-                className="flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"
-                >
-              <IoChatbubbleEllipses />
-            </Link>
             {user && (
-              <>
-                <ButtonAction idUserProfile={id as string} action="like" />
-                <ButtonAction idUserProfile={id as string} action="follow" />
-              </>
-            )}  
+    
+          <div className="absolute top-6 right-6 flex items-center gap-2">
+              <Link
+                  href={`/dashboard/member/chats/${[id, user?.idUser].sort().join('-')}`}
+                  className="flex items-center gap-2 bg-purple-800 hover:bg-purple-500 px-3 py-1.5 text-white my-3 rounded-md"
+                  >
+                <IoChatbubbleEllipses />
+              </Link>
+              <ButtonAction idUserProfile={id as string} action="like" />
+              <ButtonAction idUserProfile={id as string} action="follow" />
           </div>
+            )}  
 
           <CardProfileUser userInfos={userInfos} />
 

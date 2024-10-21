@@ -2,6 +2,7 @@ import ButtonLikePost from "@/app/components/posts/ButtonLikePost";
 import { useContextAuth } from "@/contexts/AuthContext";
 import { PostSingleProps } from "@/types/types";
 import Link from "next/link";
+import { FaHeart } from "react-icons/fa";
 
 export default function HeaderPost({ userInfos, postData, id }: PostSingleProps) {  
 
@@ -23,6 +24,10 @@ export default function HeaderPost({ userInfos, postData, id }: PostSingleProps)
           </h1>
           <p className="text-white text-sm">
             Publié par <Link className="text-purple-500" href={`/members/${userInfos.idUser}`}>{userInfos.firstName} {userInfos.lastName}</Link>
+          </p>
+          <p className="text-white text-sm flex items-center gap-2">
+            <FaHeart />
+            <span>{postData?.usersLikePost?.length} likes</span>
           </p>
 
           {user && (

@@ -41,7 +41,7 @@ export default function MemberGridPost( {id }: {id: string}) {
   return (
     <div className="w-full mt-4">
       <h3 className="text-sm text-white mb-2 "> {posts.length} Post{posts.length > 1 && "s"}: </h3>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <ul className="grid grid-cols-1 md:grid-cols-2  gap-4">
         {posts.length === 0 ? (
           <p className="text-gray-500">Aucun post .</p>
         ) : (
