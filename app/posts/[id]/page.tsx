@@ -1,8 +1,8 @@
 "use client"
 
 import Loader from "@/app/components/Loader";
-import ContentPost from "@/app/components/posts/ContentPost";
-import HeaderPost from "@/app/components/posts/HeaderPost";
+import PostContent from "@/app/components/posts/PostContent";
+import PostHeader from "@/app/components/posts/PostHeader";
 import { PostTypeData, UserTypeData } from "@/types/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -73,8 +73,8 @@ export default function PostSinglePage() {
     <>
       {dataPost && userInfos && (
         <>
-          <HeaderPost userInfos={userInfos} postData={dataPost} id={id as string} />
-          <ContentPost userInfos={userInfos} postData={dataPost} id={id as string} /> 
+          <PostHeader userInfos={userInfos} postData={dataPost} id={id as string} />
+          <PostContent userInfos={userInfos} postData={dataPost} id={id as string} /> 
         </>
       )}
     </>

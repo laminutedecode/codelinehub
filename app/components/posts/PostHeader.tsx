@@ -4,7 +4,7 @@ import { PostSingleProps } from "@/types/types";
 import Link from "next/link";
 import { FaHeart } from "react-icons/fa";
 
-export default function HeaderPost({ userInfos, postData, id }: PostSingleProps) {  
+export default function PostHeader({ userInfos, postData, id }: PostSingleProps) {  
 
   const {user} = useContextAuth();
 

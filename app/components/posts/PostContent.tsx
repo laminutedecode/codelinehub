@@ -3,7 +3,7 @@ import { PostSingleProps } from "@/types/types";
 import Link from "next/link";
 import { GrUpdate } from "react-icons/gr";
 
-export default function ContentPostSingle({ userInfos, postData }: PostSingleProps) {
+export default function PostContent({ userInfos, postData }: PostSingleProps) {
   return (
     <div className="max-w-[1200px] mx-auto md:border-l md:border-r px-6 pb-6">
 
