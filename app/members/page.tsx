@@ -79,7 +79,7 @@ export default function UsersPage() {
               <div className="w-32 h-32 mx-auto bg-white rounded-full overflow-hidden flex items-center justify-center">
                 <Image
                   src={user?.image ? user.image as string : '/images/default-avatar.png'}
-                  alt={user?.firstName as string}
+                  alt={user?.firstName ? user?.firstName as string : "Photo de profil de l'utilisateur"}
                   width={900}
                   height={600}
                   className="w-full h-full object-cover"

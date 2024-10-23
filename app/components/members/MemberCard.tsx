@@ -10,7 +10,7 @@ export default function MemberCard({userInfos}: UserProfileProps) {
 
        <Image
           src={userInfos?.image ? userInfos.image as string : '/images/default-avatar.png'}
-          alt={userInfos?.firstName as string}
+          alt={userInfos?.firstName ? userInfos?.firstName as string : "Photo de profil de l'utilisateur"}
           width={500}
           height={500}
           className="w-hull h-full object-cover rounded-full"
